@@ -9,6 +9,7 @@ Basic Demostration of a Single Page Application utilizing Vue JS, Tailwindcss an
 
 - Requires NPM version 10.2.0
 - Node Version 20.7.0
+- Please point a test url to your localhost application for laravel and Vue JS to map routes correctly
 ## Taskmaster Setup
 
 - Install Node Version v20.7.0 
