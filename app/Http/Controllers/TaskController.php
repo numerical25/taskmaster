@@ -11,9 +11,11 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Task::paginate(10);
+        $orderBy = $request->query('orderBy', 'priority_order');
+        $orderDirection = $request->query('orderDirection', 'asc');
+        return Task::orderBy($orderBy, $orderDirection)->paginate(10);
     }
 
     /**

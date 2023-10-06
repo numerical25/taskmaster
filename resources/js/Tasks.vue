@@ -11,13 +11,18 @@
                 <tr>
                     <th class=" py-2 text-emerald-600 text-left">Title</th>
                     <th class=" py-2 text-emerald-600">Priority</th>
+                    <th class=" py-2 text-emerald-600">Priority Order</th>
                     <th class=" py-2 text-emerald-600">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="record in records">
+                <tr v-for="(record, index) in records" :key="index" draggable="true"
+                    @dragstart="onDragStart($event, index)"
+                    @dragover="onDragOver($event)"
+                    @drop="onDrop($event, index)">
                     <td class=""> {{ record.name }}</td>
                     <td class="text-center"> {{ record.priority }}</td>
+                    <td class="text-center"> {{ record.priority_order }}</td>
                     <td class="text-center flex justify-center">
                         <button @click="openModal(record.id)"
                                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
@@ -113,6 +118,30 @@ export default {
                 this.pagination.to = response.data.to;
                 this.pagination.total = response.data.total;
             });
+        },
+        onDragStart(event ,index) {
+            event.dataTransfer.setData('text/plain', index);
+        },
+        onDragOver(event) {
+            event.preventDefault();
+        },
+        onDrop(event, newIndex) {
+            event.preventDefault();
+            const draggedIndex = event.dataTransfer.getData('text/plain');
+            if (draggedIndex !== '') {
+                const draggedTask = this.records[draggedIndex];
+                const originalDraggedOrder = draggedTask.priority_order;
+
+                const droppedTask = this.records[newIndex];
+                draggedTask.priority_order = droppedTask.priority_order;
+                droppedTask.priority_order = originalDraggedOrder;
+
+                axios.post(`${API_ENDPOINT}tasks/${draggedTask.id}/update`, draggedTask);
+                axios.post(`${API_ENDPOINT}tasks/${droppedTask.id}/update`, droppedTask);
+
+                this.records[newIndex] = draggedTask;
+                this.records[draggedIndex] = droppedTask;
+            }
         }
     },
     components : {

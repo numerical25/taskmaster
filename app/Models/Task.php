@@ -11,6 +11,7 @@ class Task extends Model
     protected $fillable = [
         'id',
         'priority',
+        'priority_order',
         'name'
     ];
 }

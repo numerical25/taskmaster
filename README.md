@@ -29,6 +29,7 @@ DB_DATABASE=taskmaster
 DB_USERNAME=root
 DB_PASSWORD="Yourpassword"
 ```
+- Build Task Master Database `php artisan migrate`
 - To seed the taskmaster database run `php artisan db:seed`
 - Then do a `npm install`
 - Finally run `npm run dev`
