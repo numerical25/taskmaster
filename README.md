@@ -18,6 +18,7 @@ Basic Demostration of a Single Page Application utilizing Vue JS, Tailwindcss an
 - - Go to root directory and do `git clone https://github.com/numerical25/taskmaster .`
 - Go to the root directory of laravel
 - - Composer Install `composer install`
+- Copy .example.env to .env
 - Go to `.env` to edit the database connection like the example bellow
 ```
 DB_CONNECTION=mysql
