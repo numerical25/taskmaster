@@ -14,6 +14,8 @@ Basic Demostration of a Single Page Application utilizing Vue JS, Tailwindcss an
 - Install Node Version v20.7.0 
 - - Prefer to use node version manager for easy installation
 - Install NPM version 10.2.0
+- make a directory for the application
+- - Go to root directory and do `git clone https://github.com/numerical25/taskmaster .`
 - Go to the root directory of laravel
 - - Composer Install `composer install`
 - Go to `.env` to edit the database connection like the example bellow
