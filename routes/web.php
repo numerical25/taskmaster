@@ -13,20 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::any('{any}', function () {
     return view('app');
-});
-
-Route::get('/task', function () {
-    return view('app');
-});
-
-Route::get('/task/edit/{id?}', function () {
-    return view('app');
-});
-
-Route::get('/task/create', function () {
-    return view('app');
-});
-
+})->where('any','.*');
 
