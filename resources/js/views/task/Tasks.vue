@@ -1,5 +1,5 @@
 <template>
-        <div class="flex justify-between p-8">
+        <div class="flex justify-between px-5 pb-8 pt-4">
             <h1 class="text-4xl font-bold">Tasks</h1>
             <div class="flex">
                 <router-link class="btn btn-blue mr-3" :to="{ name: 'products' }">
@@ -23,13 +23,14 @@ import {API_ENDPOINT} from "../../constants.js"
 import PromptDeleteTask from "../../modals/PromptDeleteTask.vue";
 import Pagination from "../../components/Pagination.vue";
 import TaskList from "../../components/lists/TaskList.vue";
+import ApiService from "../../services/ApiService.js";
 export default {
     mounted() {
         const element = this.$refs.modal;
         this.deleteModal = this.$refs.promptDelete;
         this.pagination = this.$refs.pagination;
         this.deleteModal.onAfterDelete(() => {
-           this.getTasks();
+           this.getTasks('tasks');
         });
         // options with default values
         const options = {
@@ -57,11 +58,12 @@ export default {
             deleteModal: PromptDeleteTask,
             pagination: Pagination,
             nextPageUrl: '',
-            lastPageUrl: ''
+            lastPageUrl: '',
+            apiService: new ApiService()
         };
     },
     created() {
-        this.getTasks();
+        this.getTasks('tasks');
     },
     methods: {
         handleNext() {
@@ -80,11 +82,7 @@ export default {
             this.modal.hide();
         },
         getTasks(url = null) {
-            let pageUrl = `${API_ENDPOINT}tasks`;
-            if(url) {
-                pageUrl = url;
-            }
-            axios.get(pageUrl).then((response) => {
+            this.apiService.get(url).then((response) => {
                 this.records = response.data.data;
                 this.nextPageUrl = response.data.next_page_url;
                 this.lastPageUrl = response.data.prev_page_url;

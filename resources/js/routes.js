@@ -4,6 +4,7 @@ import Tasks from "./views/task/Tasks.vue";
 import Create from "./views/task/Create.vue";
 import Products from "./views/products/Products.vue";
 import Cart from "./views/cart/Cart.vue";
+import ProductView from "./views/products/View.vue";
 
 const routes = [
     {
@@ -15,6 +16,13 @@ const routes = [
         path: '/products',
         component: Products,
         name: 'products',
+        children: [
+        ]
+    },
+    {
+        path: '/products/:id/details',
+        component: ProductView,
+        name: 'product-details',
         children: [
         ]
     },

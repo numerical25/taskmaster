@@ -5,24 +5,24 @@ import axios from 'axios';
 import {Cart} from "../../store/Cart.js";
 import Product from "../../models/Product.js";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
+import ApiService from "../../services/ApiService.js";
 export default defineComponent({
     name: "Products",
     components: {DefaultQuantityControl},
     mounted() {
-        console.log(this.products_url);
-        axios.get(this.products_url).then((response) => {
+        this.apiService.get('products').then((response) => {
             this.products = response.data.data.map(productData => new Product(productData));
         });
     },
     data() {
         return {
             cart: Cart,
-            products_url: `${API_ENDPOINT}products`,
             products: [],
             USDollar : new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
-            })
+            }),
+            apiService: new ApiService()
         }
     },
     methods: {
@@ -54,7 +54,9 @@ export default defineComponent({
         <div class="pl-5 flex justify-between w-full">
             <div>
                 <div>
-                    <b>{{product.name}}</b>
+                    <router-link :to="{name: 'product-details', params: {id: product.id}}">
+                        <b>{{product.name}}</b>
+                    </router-link>
                 </div>
                 <div>
                     {{formatCurrency(product.price)}}

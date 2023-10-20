@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-
+Product Detail Page
 </template>
 
 <style scoped>
