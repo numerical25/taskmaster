@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen pb-10 overflow-y-auto">
-        <div class="flex p-8 bg-primary overflow-y-auto">
+        <div class="flex px-8 py-2 bg-primary overflow-y-auto">
             <h1 class="text-5xl font-bold text-white">The Social Machine</h1>
         </div>
         <router-view></router-view>

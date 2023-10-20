@@ -16,10 +16,10 @@ export default defineComponent({
     <table class="table-auto w-full">
         <thead>
         <tr>
-            <th class=" py-2 text-emerald-600 text-left">Title</th>
-            <th class=" py-2 text-emerald-600">Priority</th>
-            <th class=" py-2 text-emerald-600">Priority Order</th>
-            <th class=" py-2 text-emerald-600">Action</th>
+            <th class=" py-2 text-primary text-left">Title</th>
+            <th class=" py-2 text-primary">Priority</th>
+            <th class=" py-2 text-primary">Priority Order</th>
+            <th class=" py-2 text-primary">Action</th>
         </tr>
         </thead>
         <tbody>

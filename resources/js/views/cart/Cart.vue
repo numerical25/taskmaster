@@ -8,8 +8,18 @@ export default defineComponent({
     components: {DefaultQuantityControl, TrashIcon},
     data() {
         return {
-            cart: Cart
+            cart: Cart,
+            total: 0,
+            USDollar : new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }),
         }
+    },
+    created() {
+        this.cart.state.products.forEach((product) => {
+            this.total += product.price;
+        });
     },
     methods: {
         emptyCart() {
@@ -35,6 +45,7 @@ export default defineComponent({
             </div>
             <div class="pl-5">
                 {{product.name}}
+                {{USDollar.format(product.price)}}
             </div>
         </div>
         <div class="w-44 flex flex-col items-center">
@@ -47,10 +58,13 @@ export default defineComponent({
             </div>
         </div>
     </div>
+    <div class="px-8">
+        <b>Total:</b> {{ USDollar.format(total)}}
+    </div>
     <div class="px-8 py-2">
             <button class="btn-primary" @click="emptyCart">Empty Cart</button>
+            <router-link to="checkout" class="btn-primary ml-5">Checkout</router-link>
     </div>
-
 </template>
 
 <style scoped>
