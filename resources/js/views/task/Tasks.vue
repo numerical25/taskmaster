@@ -1,66 +1,32 @@
 <template>
         <div class="flex justify-between p-8">
             <h1 class="text-4xl font-bold">Tasks</h1>
-            <router-link :to="{ name: 'task-create' }">
-                <button class="dark:bg-blue-600 rounded font-bold py-2 px-5 text-white">Create Task</button>
-            </router-link>
+            <div class="flex">
+                <router-link class="btn btn-blue mr-3" :to="{ name: 'products' }">
+                    View Products
+                </router-link>
+                <router-link class="btn btn-blue" :to="{ name: 'task-create' }">
+                    Create Task
+                </router-link>
+            </div>
         </div>
         <div class="rounded-t-xl overflow-hidden p-8">
-            <table class="table-auto w-full">
-                <thead>
-                <tr>
-                    <th class=" py-2 text-emerald-600 text-left">Title</th>
-                    <th class=" py-2 text-emerald-600">Priority</th>
-                    <th class=" py-2 text-emerald-600">Priority Order</th>
-                    <th class=" py-2 text-emerald-600">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(record, index) in records" :key="index" draggable="true"
-                    @dragstart="onDragStart($event, index)"
-                    @dragover="onDragOver($event)"
-                    @drop="onDrop($event, index)">
-                    <td class=""> {{ record.name }}</td>
-                    <td class="text-center"> {{ record.priority }}</td>
-                    <td class="text-center"> {{ record.priority_order }}</td>
-                    <td class="text-center flex justify-center">
-                        <button @click="openModal(record.id)"
-                                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
-            focus:outline-none focus:ring-blue-300 font-medium rounded-lg mr-4
-            text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            Delete
-                        </button>
-                        <router-link :to="{ name: 'task-edit', params: { id: record.id } }">
-                            <button
-                                class="g-blue-500 bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                        </router-link>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <task-list :records="records"></task-list>
         </div>
-        <pagination ref="pagination"></pagination>
+        <pagination :on-back="handleBack" :on-next="handleNext" ref="pagination"></pagination>
         <prompt-delete-task ref="promptDelete"></prompt-delete-task>
 </template>
 <script>
 import axios from 'axios';
 import { Modal } from 'flowbite';
-import * as constants from "constants";
-import {API_ENDPOINT} from "./constants.js";
-import PromptDeleteTask from "./modals/PromptDeleteTask.vue";
-import Pagination from "./components/Pagination.vue";
+import {API_ENDPOINT} from "../../constants.js"
+import PromptDeleteTask from "../../modals/PromptDeleteTask.vue";
+import Pagination from "../../components/Pagination.vue";
+import TaskList from "../../components/lists/TaskList.vue";
 export default {
     mounted() {
         const element = this.$refs.modal;
         this.deleteModal = this.$refs.promptDelete;
-        this.$refs.pagination.onNext(() => {
-            if(this.nextPageUrl)
-                this.getTasks(this.nextPageUrl)
-        });
-        this.$refs.pagination.onBack(() => {
-            if(this.lastPageUrl)
-                this.getTasks(this.lastPageUrl);
-        });
         this.pagination = this.$refs.pagination;
         this.deleteModal.onAfterDelete(() => {
            this.getTasks();
@@ -98,6 +64,14 @@ export default {
         this.getTasks();
     },
     methods: {
+        handleNext() {
+            if(this.nextPageUrl)
+                this.getTasks(this.nextPageUrl)
+        },
+        handleBack() {
+            if(this.lastPageUrl)
+                this.getTasks(this.lastPageUrl);
+        },
         openModal(id) {
             this.deleteModal.openModal(id);
         },
@@ -146,7 +120,8 @@ export default {
     },
     components : {
         PromptDeleteTask,
-        Pagination
+        Pagination,
+        TaskList
     }
 };
 </script>

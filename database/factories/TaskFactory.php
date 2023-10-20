@@ -16,8 +16,12 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
+        static $order = 1;
         return [
             //
+            'name' => $this->faker->name,
+            'priority' => $this->faker->randomElement(['High', 'Medium', 'Low']),
+            'priority_order' => $order++
         ];
     }
 }

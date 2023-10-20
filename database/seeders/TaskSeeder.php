@@ -13,14 +13,6 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        $tasks = [
-            ['name' => 'Task 1', 'priority' => 'High',  'priority_order' => 1],
-            ['name' => 'Task 2', 'priority' => 'Medium', 'priority_order' => 2],
-            ['name' => 'Task 3', 'priority' => 'Low' ,'priority_order' => 3],
-        ];
-
-        foreach ($tasks as $task) {
-            Task::create($task);
-        }
+        Task::factory('50')->create();
     }
 }

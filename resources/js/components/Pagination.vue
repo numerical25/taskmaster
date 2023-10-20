@@ -5,29 +5,31 @@ export default defineComponent({
     name: "Pagination",
     data() {
         return {
-            nextCallBack: null,
-            backCallBack: null,
             from: 0,
             to: 0,
             total: 0
         }
     },
     methods: {
-        onNext(callback) {
-            this.nextCallBack = callback;
-        },
-        onBack(callback) {
-            this.backCallBack = callback;
-        },
         next() {
-            if(this.nextCallBack) {
-                this.nextCallBack();
+            if(this.onNext) {
+                this.onNext();
             }
         },
         back() {
-            if(this.backCallBack) {
-                this.backCallBack()
+            if(this.onBack) {
+                this.onBack();
             }
+        }
+    },
+    props: {
+        onNext: {
+            type: Function,
+            required: true,
+        },
+        onBack: {
+            type: Function,
+            required: true,
         }
     }
 })
