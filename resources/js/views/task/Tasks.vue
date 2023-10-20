@@ -13,7 +13,9 @@
         <div class="rounded-t-xl overflow-hidden p-8">
             <task-list :records="records"></task-list>
         </div>
-        <pagination :on-back="handleBack" :on-next="handleNext" ref="pagination"></pagination>
+        <pagination :from-prop="apiService.data.from" :to-prop="apiService.data.to" :total-prop="apiService.data.total"
+                    :on-back="handleBack" :on-next="handleNext"
+                    ref="pagination"></pagination>
         <prompt-delete-task ref="promptDelete"></prompt-delete-task>
 </template>
 <script>
@@ -24,11 +26,12 @@ import PromptDeleteTask from "../../modals/PromptDeleteTask.vue";
 import Pagination from "../../components/Pagination.vue";
 import TaskList from "../../components/lists/TaskList.vue";
 import ApiService from "../../services/ApiService.js";
+import 'vue3-toastify/dist/index.css';
+import {toast} from "vue3-toastify";
 export default {
     mounted() {
         const element = this.$refs.modal;
         this.deleteModal = this.$refs.promptDelete;
-        this.pagination = this.$refs.pagination;
         this.deleteModal.onAfterDelete(() => {
            this.getTasks('tasks');
         });
@@ -56,9 +59,6 @@ export default {
             records: null,
             modal: Modal,
             deleteModal: PromptDeleteTask,
-            pagination: Pagination,
-            nextPageUrl: '',
-            lastPageUrl: '',
             apiService: new ApiService()
         };
     },
@@ -67,12 +67,22 @@ export default {
     },
     methods: {
         handleNext() {
-            if(this.nextPageUrl)
-                this.getTasks(this.nextPageUrl)
+            this.apiService.next().then((response) => {
+                this.records = response.data.data;
+            }, (error) => {
+                toast(error, {
+                    autoClose: 1000,
+                }); // ToastOptions
+            });
         },
         handleBack() {
-            if(this.lastPageUrl)
-                this.getTasks(this.lastPageUrl);
+            this.apiService.back().then((response) => {
+                this.records = response.data.data;
+            }, (error) => {
+                toast(error, {
+                    autoClose: 1000,
+                }); // ToastOptions
+            });
         },
         openModal(id) {
             this.deleteModal.openModal(id);
@@ -84,11 +94,6 @@ export default {
         getTasks(url = null) {
             this.apiService.get(url).then((response) => {
                 this.records = response.data.data;
-                this.nextPageUrl = response.data.next_page_url;
-                this.lastPageUrl = response.data.prev_page_url;
-                this.pagination.from = response.data.from;
-                this.pagination.to = response.data.to;
-                this.pagination.total = response.data.total;
             });
         },
         onDragStart(event ,index) {

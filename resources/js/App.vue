@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen pb-10 overflow-y-auto">
-        <div class="flex p-8 bg-green-800 overflow-y-auto">
+        <div class="flex p-8 bg-primary overflow-y-auto">
             <h1 class="text-5xl font-bold text-white">The Social Machine</h1>
         </div>
         <router-view></router-view>
@@ -29,8 +29,17 @@ export default {
 .btn-blue:hover {
     @apply bg-blue-700;
 }
+.btn-red {
+    @apply btn bg-red-800 text-white;
+}
 .btn-primary {
     @apply btn btn-blue;
+}
+.bg-primary {
+    @apply bg-green-800;
+}
+.text-primary {
+    @apply text-green-800;
 }
 .text-box-primary {
 

@@ -1,16 +1,20 @@
 <script>
 import {defineComponent} from 'vue'
-import {API_ENDPOINT} from "../../constants.js";
-import axios from 'axios';
 import {Cart} from "../../store/Cart.js";
 import Product from "../../models/Product.js";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
 import ApiService from "../../services/ApiService.js";
+import { ShoppingCartIcon } from "@heroicons/vue/24/solid/index.js";
+import {toast} from "vue3-toastify";
+import 'vue3-toastify/dist/index.css';
 export default defineComponent({
     name: "Products",
-    components: {DefaultQuantityControl},
+    components: {ShoppingCartIcon, DefaultQuantityControl},
     mounted() {
         this.apiService.get('products').then((response) => {
+            toast("Products Loaded", {
+                autoClose: 1000,
+            }); // ToastOptions
             this.products = response.data.data.map(productData => new Product(productData));
         });
     },
@@ -31,17 +35,27 @@ export default defineComponent({
         },
         addToCart(product) {
             Cart.dispatch('addToCart', product).then((response) => {
+                toast(response, {
+                    autoClose: 1000,
+                }); // ToastOptions
             }, (error) => {
-                console.log("Error", error);
+                toast(error, {
+                    autoClose: 1000,
+                }); // ToastOptions
             });
         }
-    }
+    },
 })
 </script>
 
 <template>
     <div class="flex justify-between pt-4 px-5">
-        <div>{{cart.state.products.length}}</div>
+        <router-link class="flex" to="cart">
+            <ShoppingCartIcon class="h-8 w-8 text-primary" />
+            <div class="bg-primary h-8 px-3 text-white font-bold rounded text-center pt-1 ml-2">
+                {{cart.state.products.length}}
+            </div>
+        </router-link>
         <div class="flex">
             <router-link class="btn-primary mr-3" to="task">View Tasks</router-link>
             <router-link class="btn-primary" to="cart">View Cart</router-link>
@@ -65,8 +79,10 @@ export default defineComponent({
                     {{product.description}}
                 </div>
             </div>
-            <div class="flex flex-col justify-center">
-                <button class="btn-primary" @click="addToCart(product)">Add To Cart</button>
+            <div class="flex flex-col justify-center w-44">
+                <button class="btn-primary flex items-center " @click="addToCart(product)">
+                    <ShoppingCartIcon class="h-5 w-5 text-white mr-4" />
+                    Add To Cart</button>
                 <default-quantity-control class="mt-3" v-model="product.quantity"></default-quantity-control>
             </div>
         </div>

@@ -3,13 +3,6 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
     name: "Pagination",
-    data() {
-        return {
-            from: 0,
-            to: 0,
-            total: 0
-        }
-    },
     methods: {
         next() {
             if(this.onNext) {
@@ -30,6 +23,18 @@ export default defineComponent({
         onBack: {
             type: Function,
             required: true,
+        },
+        fromProp: {
+            type: Number,
+            required: false,
+        },
+        toProp: {
+            type: Number,
+            required: false,
+        },
+        totalProp: {
+            type: Number,
+            required: false,
         }
     }
 })
@@ -40,7 +45,8 @@ export default defineComponent({
     <div class="flex flex-col items-center mb-10">
         <!-- Help text -->
         <span class="text-sm text-gray-700 dark:text-gray-400">
-      Showing <span class="font-semibold">{{from}}</span> to <span class="font-semibold">{{ to }}</span> of <span class="font-semibold">{{total}}</span> Entries
+      Showing <span class="font-semibold">{{fromProp}}</span> to <span class="font-semibold">{{ toProp }}</span>
+            of <span class="font-semibold">{{totalProp}}</span> Entries
   </span>
         <!-- Buttons -->
         <div class="inline-flex mt-2 xs:mt-0">

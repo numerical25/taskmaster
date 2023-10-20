@@ -1,5 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
+import {ShoppingCartIcon} from "@heroicons/vue/24/solid/index.js";
 
 export default defineComponent({
     name: "View"
@@ -8,6 +9,7 @@ export default defineComponent({
 
 <template>
 Product Detail Page
+    <ShoppingCartIcon />
 </template>
 
 <style scoped>

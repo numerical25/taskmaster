@@ -37,6 +37,7 @@ export const Cart = new Vuex.Store({
                   return;
               }
               commit('addToCart', product);
+              resolve('Product Successfully Added!');
           });
       },
         emptyCart({commit, state}) {
