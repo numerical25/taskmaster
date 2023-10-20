@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Task Master</title>
+    <title>The Social Machine</title>
     @vite('resources/css/app.css')
     <!-- Fonts -->
 </head>
