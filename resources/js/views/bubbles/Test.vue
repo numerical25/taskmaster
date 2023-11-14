@@ -53,43 +53,84 @@ export default defineComponent({
 
                 const svg = d3.select(containerRef.value).append('svg').attr('width', width).attr('height', height);
 
-                const node = svg
-                    .append('g')
-                    .selectAll('circle')
+                const nodesGroup = svg
+                    .selectAll('g')
                     .data(nodes)
-                    .join('circle')
+                    .enter()
+                    .append('g');
+
+                const node = nodesGroup
+                    .append('circle')
                     .attr('cx', (d) => d.x)
                     .attr('cy', (d) => d.y)
-                    .attr('r', (d) => fixedRadius) // Ensure that d.r is defined
+                    .attr('r', 0) // Start with radius 0 for initial animation
                     .attr('fill', (d) => color(d.data.group))
                     .call(d3.drag().on('start', dragstart).on('drag', dragged).on('end', dragend));
 
+                const textNode = nodesGroup
+                    .append('text')
+                    .attr('x', (d) => d.x)
+                    .attr('y', (d) => d.y)
+                    .attr('dy', '0.3em')
+                    .attr('text-anchor', 'middle')
+                    .text((d) => d.data.name)
+                    .call(d3.drag().on('start', textDragstart).on('drag', textDragged).on('end', textDragend));
 
+                node
+                    .transition()
+                    .delay((d, i) => Math.random() * 500)
+                    .duration(750)
+                    .attr('r', (d) => fixedRadius);
 
-                function dragstart(event) {
+                function dragstart(event, d) {
                     if (!event.active) simulation.alphaTarget(0.3).restart();
-                    if (event.subject) {
-                        event.subject.fx = event.subject.x;
-                        event.subject.fy = event.subject.y;
-                    }
+                    d.fx = d.x;
+                    d.fy = d.y;
                 }
 
-                function dragged(event) {
-                    if (event.subject) {
-                        event.subject.fx = event.x;
-                        event.subject.fy = event.y;
-                    }
+                function dragged(event, d) {
+                    d.fx = event.x;
+                    d.fy = event.y;
+
+                    // Update the position of the corresponding text during drag
+                    textNode
+                        .filter((textData) => textData === d)
+                        .attr('x', d.x)
+                        .attr('y', d.y);
                 }
 
-                function dragend(event) {
+                function dragend(event, d) {
                     if (!event.active) simulation.alphaTarget(0);
-                    if (event.subject) {
-                        event.subject.fx = null;
-                        event.subject.fy = null;
-                    }
+                    d.fx = null;
+                    d.fy = null;
                 }
+
+                function textDragstart(event, d) {
+                    if (!event.active) simulation.alphaTarget(0.3).restart();
+                    d.fx = d.x;
+                    d.fy = d.y;
+                }
+
+                function textDragged(event, d) {
+                    d.fx = event.x;
+                    d.fy = event.y;
+
+                    // Update the position of the corresponding circle during drag
+                    node
+                        .filter((circleData) => circleData === d)
+                        .attr('cx', d.x)
+                        .attr('cy', d.y);
+                }
+
+                function textDragend(event, d) {
+                    if (!event.active) simulation.alphaTarget(0);
+                    d.fx = null;
+                    d.fy = null;
+                }
+
                 simulation.on('tick', () => {
                     node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
+                    textNode.attr('x', (d) => d.x).attr('y', (d) => d.y);
                 });
 
                 function getRndInteger(min, max) {
