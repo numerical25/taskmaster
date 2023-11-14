@@ -42,17 +42,14 @@ export default defineComponent({
                 const hierarchy = d3.hierarchy(data).sum((d) => d.value);
                 const packLayout = d3.pack().size([width, height]).padding(1.5);
                 const nodes = packLayout(hierarchy).leaves();
-                const circleRadiusScale = d3
-                    .scaleLinear()
-                    .range([1000000, 100000]);
-                const fixedRadius = 10;
+                const fixedRadius = 20;
 
                 simulation = d3
                     .forceSimulation(nodes)
                     .force('x', d3.forceX(width / 2).strength(0.01))
                     .force('y', d3.forceY(height / 2).strength(0.01))
                     .force('cluster', forceCluster())
-                    .force('collide', forceCollide().radius((d) => fixedRadius).iterations(1));
+                    .force('collide', forceCollide().radius((d) => fixedRadius).strength(1).iterations(1));
 
                 const svg = d3.select(containerRef.value).append('svg').attr('width', width).attr('height', height);
 
@@ -67,14 +64,7 @@ export default defineComponent({
                     .attr('fill', (d) => color(d.data.group))
                     .call(d3.drag().on('start', dragstart).on('drag', dragged).on('end', dragend));
 
-                // node
-                //     .transition()
-                //     .delay((d, i) => Math.random() * 500)
-                //     .duration(750)
-                //     .attrTween('r', (d) => {
-                //         const i = d3.interpolate(0, fixedRadius);
-                //         return (t) => (d.r = i(t));
-                //     });
+
 
                 function dragstart(event) {
                     if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -101,7 +91,10 @@ export default defineComponent({
                 simulation.on('tick', () => {
                     node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
                 });
-                // invalidation.then(() => simulation.stop());
+
+                function getRndInteger(min, max) {
+                    return Math.floor(Math.random() * (max - min)) + min;
+                }
             }
         });
 
