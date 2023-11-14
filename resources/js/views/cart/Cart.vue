@@ -63,7 +63,7 @@ export default defineComponent({
     </div>
     <div class="px-8 py-2">
             <button class="btn-primary" @click="emptyCart">Empty Cart</button>
-            <router-link to="checkout" class="btn-primary ml-5">Checkout</router-link>
+            <router-link :to="{name: 'checkout'}" class="btn-primary ml-5">Checkout</router-link>
     </div>
 </template>
 

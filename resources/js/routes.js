@@ -5,6 +5,8 @@ import Create from "./views/task/Create.vue";
 import Products from "./views/products/Products.vue";
 import Cart from "./views/cart/Cart.vue";
 import ProductView from "./views/products/View.vue";
+import Checkout from "./views/cart/checkout/Checkout.vue";
+import Test from "./views/bubbles/Test.vue";
 
 const routes = [
     {
@@ -34,6 +36,13 @@ const routes = [
         ]
     },
     {
+        path: '/cart/checkout',
+        component: Checkout,
+        name: 'checkout',
+        children: [
+        ]
+    },
+    {
         path: '/task',
         component: Tasks,
         name: 'task',
@@ -49,6 +58,11 @@ const routes = [
         path: '/task/create',
         component: Create,
         name: 'task-create'
+    },
+    {
+        path: '/bubbles',
+        component: Test,
+        name: 'bubbles'
     }
 ];
 
