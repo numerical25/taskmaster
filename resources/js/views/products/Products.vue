@@ -7,9 +7,10 @@ import ApiService from "../../services/ApiService.js";
 import { ShoppingCartIcon } from "@heroicons/vue/24/solid/index.js";
 import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
+import Button from "primevue/button";
 export default defineComponent({
     name: "Products",
-    components: {ShoppingCartIcon, DefaultQuantityControl},
+    components: {ShoppingCartIcon, DefaultQuantityControl, Button},
     mounted() {
         this.apiService.get('products').then((response) => {
             toast("Products Loaded", {
@@ -57,8 +58,8 @@ export default defineComponent({
             </div>
         </router-link>
         <div class="flex">
-            <router-link class="btn-primary mr-3" to="task">View Tasks</router-link>
-            <router-link class="btn-primary" to="cart">View Cart</router-link>
+            <router-link to="task"><Button class="mr-3" label="View Tasks" /></router-link>
+            <router-link to="cart"><Button label="View Cart" /></router-link>
         </div>
     </div>
     <div v-for="product in products" class="p-5 flex">
@@ -80,9 +81,7 @@ export default defineComponent({
                 </div>
             </div>
             <div class="flex flex-col justify-center w-44">
-                <button class="btn-primary flex items-center " @click="addToCart(product)">
-                    <ShoppingCartIcon class="h-5 w-5 text-white mr-4" />
-                    Add To Cart</button>
+                <Button label="Add to Cart" icon="pi pi-cart-plus" @click="addToCart(product)" />
                 <default-quantity-control class="mt-3" v-model="product.quantity"></default-quantity-control>
             </div>
         </div>

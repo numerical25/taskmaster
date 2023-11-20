@@ -8,8 +8,7 @@ import Vuex from 'vuex'
 import {Cart} from "./store/Cart.js";
 import PrimeVue from 'primevue/config';
 
-
-import 'primevue/resources/themes/tailwind-light/theme.css'
+import 'primevue/resources/themes/tailwind-light/theme.css';
 
 const app = createApp(App);
 app.use(PrimeVue);

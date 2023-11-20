@@ -7,6 +7,7 @@ import Button from 'primevue/button';
 import Dock from 'primevue/dock';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import customForceCollide from "./ds3/CustomForceCollide.js";
 export default defineComponent({
     setup() {
         const containerRef = ref(null);
@@ -45,14 +46,43 @@ export default defineComponent({
                 simulation = d3
                     .forceSimulation(nodes)
                     .force('cluster', null)
-                    .force('collide', customForceCollide().radius((d) => 20).strength(0.2));
+                    .force('collide', customForceCollide(radiusScale).radius((d) => 20).strength(0.2));
                 const svg = d3.select(containerRef.value).append('svg').attr('width', width).attr('height', height);
-
+                const defs = svg.append("defs");
                 const nodesGroup = svg
                     .selectAll('g')
                     .data(nodes)
                     .enter()
                     .append('g');
+                const gradients = defs.append("radialGradient")
+                    .attr("id", 'gradientMain')
+                    .attr("cx", "50%") // Center x-coordinate
+                    .attr("cy", "50%") // Center y-coordinate
+                    .attr("r", "50%")  // Radius as a percentage of the circle's size
+
+                // Add color stops to the gradient
+                gradients.append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", "rgba(255, 0, 0, 0)");  // Start color
+
+                gradients.append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", "#8B0000");  // End color (transparent)
+
+                const gradientsGreen = defs.append("radialGradient")
+                    .attr("id", 'gradientGreen')
+                    .attr("cx", "50%") // Center x-coordinate
+                    .attr("cy", "50%") // Center y-coordinate
+                    .attr("r", "50%")  // Radius as a percentage of the circle's size
+
+                // Add color stops to the gradient
+                gradientsGreen.append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", "rgba(1, 50, 32, 0)");  // Start color
+
+                gradientsGreen.append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", "rgba(1, 50, 32, 1)");  // End color (transparent)
 
                 const node = nodesGroup
                     .append('circle')
@@ -62,7 +92,7 @@ export default defineComponent({
                     .attr('r', 0) // Start with radius 0 for initial animation
                     .attr('fill', (d) => {
                         var test = d.data.quote[0].volume_24_change_24h;
-                        return (Number(d.data.quote[0].volume_24h_change_24h) > 0 ? '#00FF00' : '#FF0000');
+                        return (Number(d.data.quote[0].volume_24h_change_24h) > 0 ? 'url(#gradientGreen)' : 'url(#gradientMain)');
                     })
                     .attr('opacity', 0.5)
                     .call(d3.drag().on('start', dragstart).on('drag', dragged).on('end', dragend));
@@ -139,51 +169,6 @@ export default defineComponent({
                     d.fy = d.y;
                     d.dragStartX = event.x;
                     d.dragStartY = event.y;
-                }
-                function customForceCollide() {
-                    let nodes;
-                    let strength = 0.2;
-                    let radius = d => 1;
-
-                    function force(alpha) {
-                        const quadtree = d3.quadtree(nodes, d => d.x, d => d.y);
-
-                        nodes.forEach(node => {
-                            const r = radius(node) + radiusScale(node.data.quote[0].volume_24h);
-                            const nx1 = node.x - r, ny1 = node.y - r;
-                            const nx2 = node.x + r, ny2 = node.y + r;
-
-                            quadtree.visit((quad, x1, y1, x2, y2) => {
-                                if (!quad.length) {
-                                    do {
-                                        const other = quad.data;
-                                        if (other && (other !== node)) {
-                                            let x = node.x - other.x;
-                                            let y = node.y - other.y;
-                                            let distance = Math.sqrt(x * x + y * y);
-                                            const minDistance = r + radius(other);
-
-                                            if (distance < minDistance) {
-                                                distance = (distance - minDistance) / distance * alpha * strength;
-                                                node.x -= x *= distance;
-                                                node.y -= y *= distance;
-                                                other.x += x;
-                                                other.y += y;
-                                            }
-                                        }
-                                    } while (quad = quad.next);
-                                }
-                                return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-                            });
-                        });
-                    }
-
-                    force.initialize = _ => nodes = _;
-
-                    force.strength = _ => (_ === undefined ? strength : (strength = +_, force));
-                    force.radius = _ => (_ === undefined ? radius : (radius = typeof _ === 'function' ? _ : constant(+_), force));
-
-                    return force;
                 }
                 function dragged(event, d) {
                     d.fx = event.x;
@@ -310,7 +295,8 @@ export default defineComponent({
         return {
             apiSerivce: new ApiService(),
             visible: false,
-            tickerList: []
+            tickerList: [],
+            position: 'bottom'
         };
     },
     components: {Button, Dialog, Dock, DataTable, Column}
@@ -324,6 +310,7 @@ export default defineComponent({
 
     <Dialog ref="cryptoInfo"
             maximizable
+            :position="position"
             v-model:visible="visible"
             modal header="Crypto Ticker List"  :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
         <p class="m-0">

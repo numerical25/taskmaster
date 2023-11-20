@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-function customForceCollide() {
+export default function customForceCollide(radiusScale) {
     let nodes;
     let strength = 0.2;
     let radius = d => 1;
