@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen overflow-y-auto">
-        <div class="flex px-8 py-2 bg-primary overflow-y-auto">
+        <div class="flex px-8 py-2 bg-primary overflow-y-auto justify-center">
             <h1 class="text-5xl font-bold text-white">The Social Machine</h1>
         </div>
         <router-view></router-view>
@@ -20,6 +20,7 @@ export default {
 };
 </script>
 <style>
+
 .btn {
     @apply font-bold py-2 px-4 rounded;
 }

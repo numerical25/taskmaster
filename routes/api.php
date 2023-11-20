@@ -25,3 +25,6 @@ Route::post('/tasks/{id}/update', [\App\Http\Controllers\TaskController::class, 
 Route::delete('/tasks/{id}/delete', [\App\Http\Controllers\TaskController::class, 'destroy']);
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
+
+Route::get('/crypto', [\App\Http\Controllers\CryptoController::class, 'index']);
+Route::get('/crypto/cptickers', [\App\Http\Controllers\CryptoController::class, 'getCPTickers']);
