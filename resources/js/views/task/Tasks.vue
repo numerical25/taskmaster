@@ -2,11 +2,11 @@
         <div class="flex justify-between px-5 pb-8 pt-4">
             <h1 class="text-4xl font-bold">Tasks</h1>
             <div class="flex">
-                <router-link class="btn btn-blue mr-3" :to="{ name: 'products' }">
-                    View Products
+                <router-link class="mr-3" :to="{ name: 'products' }">
+                    <Button label="View Products" />
                 </router-link>
-                <router-link class="btn btn-blue" :to="{ name: 'task-create' }">
-                    Create Task
+                <router-link  :to="{ name: 'task-create' }">
+                    <Button label="Create Task" />
                 </router-link>
             </div>
         </div>
@@ -28,6 +28,7 @@ import TaskList from "../../components/lists/TaskList.vue";
 import ApiService from "../../services/ApiService.ts";
 import 'vue3-toastify/dist/index.css';
 import {toast} from "vue3-toastify";
+import Button from "primevue/button";
 export default {
     mounted() {
         const element = this.$refs.modal;
@@ -124,7 +125,8 @@ export default {
     components : {
         PromptDeleteTask,
         Pagination,
-        TaskList
+        TaskList,
+        Button
     }
 };
 </script>

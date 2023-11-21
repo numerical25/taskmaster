@@ -6,9 +6,10 @@ import Card from "primevue/card";
 import InputText from "primevue/inputtext";
 import Button from 'primevue/button';
 import ToggleButton from 'primevue/togglebutton';
-import Address from "../../../models/Address.js";
 import Checkout from "../../../models/Checkout.js";
 import StripeJsAddress from "../../../models/StripeJsAddress.js";
+import {useToast} from "primevue/usetoast";
+import StripeJsBillingDetails from "../../../models/StripeJsBillingDetails";
 
 export default defineComponent({
     name: "Checkout",
@@ -53,18 +54,28 @@ export default defineComponent({
     data() {
         return {
             checkout: new Checkout(),
+            toast: useToast()
         }
     },
     methods: {
         pay() {
             const cardElement = this.card.stripeElement;
-            // Access instance methods, e.g. createToken()
-            let billingAddress = new StripeJsAddress('Joe Smoe', this.checkout.billingAddress);
+            let billing = new StripeJsBillingDetails('Joe Smoe',null,null, this.checkout.billingAddress);
             if(this.checkout.sameAsBilling){
-                billingAddress = new StripeJsAddress('Joe Smoe', this.checkout.shippingAddress);
+                billing = new StripeJsBillingDetails('Joe Smoe',null,null, this.checkout.shippingAddress);
             }
-            this.elms.instance.createToken(cardElement,billingAddress).then((result) => {
+            this.elms.instance.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: billing
+                }).then((result) => {
                 // Handle result.error or result.token
+                if(result.error) {
+                    this.toast.error(result.error.message);
+                    return;
+                }
+                this.elms.instance.paymentIntents.create([
+                ]);
                 console.log(result)
             });
         }

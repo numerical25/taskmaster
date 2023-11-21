@@ -4,10 +4,10 @@
 
 
 export default class Address {
-    address = "";
-    address2 = "";
-    city = "";
-    state = "";
-    postalCode = "";
-    country = '';
+    address: string = "";
+    address2: string = "";
+    city:string = "";
+    state: string = "";
+    postalCode:string = "";
+    country: string = '';
 }
