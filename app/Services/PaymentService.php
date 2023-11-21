@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PaymentRequest;
 use Stripe\StripeClient;
 
 class PaymentService
@@ -12,9 +13,10 @@ class PaymentService
         $this->stripe = new StripeClient($this->secreteKey);
     }
 
-    public function oneTimePayment($request) {
+    public function stripeJsPaymentIntent(PaymentRequest $request) {
         $this->stripe->paymentIntents->create([
-            'amount' => $request->amount
+            'amount' => $request->amount(),
+            'payment_method' => $request->description(),
         ]);
     }
 }

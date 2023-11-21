@@ -17,7 +17,8 @@ class CryptoService
     public function getCryptoTickers() {
         try {
             // TODO: This needs a timer internally to check for updated tickets or pull existing
-            if($tickers = $this->getTickers()) {
+            $tickers = $this->getTickers();
+            if($tickers->total()) {
                 return $tickers;
             }
             $client = new \GuzzleHttp\Client();
@@ -27,7 +28,7 @@ class CryptoService
             $data = $this->mapTickersToModel($response);
             $quoteArray = $this->extractQuotesFromTickers($data);
             $update = $tickerModel->upsert($data, 'cp_id');
-            CPTickerQuote::upsert($quoteArray, ['type','cp_id']);
+            CPTickerQuote::upsert($quoteArray, ['type','ticker_id']);
             return $update;
         }catch (Exception $e) {
             throw new \Exception($e->getMessage());
@@ -58,7 +59,6 @@ class CryptoService
                     'id' => Str::uuid()->toString(),
                    'ticker_id' => $tickerId,
                    'type' => $type ,
-                    'cp_id' => $item['id'],
                     'price' => $quote['price'],
                     'volume_24h' => $quote['volume_24h'],
                     'volume_24h_change_24h' => $quote['volume_24h_change_24h']

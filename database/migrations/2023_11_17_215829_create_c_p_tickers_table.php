@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('c_p_tickers', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->primary()->unique();
             $table->string('cp_id');
             $table->string('name');
             $table->string('symbol');
@@ -24,6 +24,10 @@ return new class extends Migration
             $table->dateTime('first_data_at')->nullable();
             $table->dateTime('cp_last_updated')->nullable();
             $table->timestamps();
+
+            // Explicitly specify the constraint for 'cp_id'
+            $table->unique('id', 'c_p_tickers_id_unique');
+            $table->unique('cp_id', 'c_p_tickers_cp_id_unique');
         });
     }
 
@@ -32,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cpticker');
+        Schema::dropIfExists('c_p_tickers');
     }
 };

@@ -7,9 +7,16 @@ export const Cart = new Vuex.Store({
       products: []
   },
     getters: {
-        total() {
+        total(state) {
             return state.products.length
         },
+        totalCost(state) {
+            let totalCost = 0;
+            state.products.forEach((item) => {
+               totalCost += Number(item.price)
+            });
+            return totalCost;
+        }
     },
     mutations: {
         addToCart(state, data) {

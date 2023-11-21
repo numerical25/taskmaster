@@ -26,6 +26,10 @@ export default class ApiService {
         });
     }
 
+    post(endpoint, data) {
+        return Observable()
+    }
+
     next() {
         return new Promise((resolve, reject) => {
             if(this.data && this.data.next_page_url) {

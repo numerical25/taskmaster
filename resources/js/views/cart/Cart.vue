@@ -20,7 +20,7 @@ export default defineComponent({
     },
     created() {
         this.cart.state.products.forEach((product) => {
-            this.total += product.price;
+            this.total += Number(product.price);
         });
     },
     methods: {
@@ -62,7 +62,7 @@ export default defineComponent({
         </div>
     </div>
     <div class="px-8">
-        <b>Total:</b> {{ USDollar.format(total)}}
+        <b>Total:</b> {{ USDollar.format(cart.getters.totalCost)}}
     </div>
     <div class="px-8 py-2 mb-5 flex justify-between">
             <Button label="Empty Cart" @click="emptyCart" />

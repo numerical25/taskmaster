@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('c_p_ticker_quotes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('cp_id');
-            $table->string('ticker_id');
+            $table->foreignUuid('ticker_id')->unique();
             $table->string('type');
             $table->float('price');
             $table->unsignedDecimal('volume_24h', 15, 4);
             $table->decimal('volume_24h_change_24h', 20, 10)->signed();
             $table->timestamps();
+
+            $table->unique(['ticker_id', 'type'], 'c_p_tickers_quote_ticker_id_type_unique');
+        });
+        Schema::table('c_p_ticker_quotes', function($table) {
+            $table->foreign('ticker_id')->references('id')->on('c_p_tickers');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cpticker_quote');
+        Schema::dropIfExists('c_p_ticker_quotes');
     }
 };

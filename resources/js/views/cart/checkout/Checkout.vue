@@ -10,6 +10,7 @@ import Checkout from "../../../models/Checkout.js";
 import StripeJsAddress from "../../../models/StripeJsAddress.js";
 import {useToast} from "primevue/usetoast";
 import StripeJsBillingDetails from "../../../models/StripeJsBillingDetails";
+import ApiService from "../../../services/ApiService";
 
 export default defineComponent({
     name: "Checkout",
@@ -54,7 +55,8 @@ export default defineComponent({
     data() {
         return {
             checkout: new Checkout(),
-            toast: useToast()
+            toast: useToast(),
+            apiService: new ApiService()
         }
     },
     methods: {

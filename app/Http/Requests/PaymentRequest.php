@@ -27,7 +27,7 @@ class PaymentRequest extends FormRequest
             'amount' => 'required|numeric',
             'description' => 'string',
             'currency' => 'string',
-            'payment_method' => 'required|numeric'
+            'payment_method' => 'required|string'
             // Add more rules for other parameters
         ];
     }
@@ -67,5 +67,10 @@ class PaymentRequest extends FormRequest
     public function description()
     {
         return $this->input('description');
+    }
+
+    public function payment_method()
+    {
+        return $this->input('payment_method');
     }
 }

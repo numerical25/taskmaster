@@ -16,7 +16,8 @@ class PaymentControllerTest extends TestCase
         $response = $this->post('/api/payment/stripejs/capture',
         [
             'amount' => 22.59,
-            'description' => 'Payment from store'
+            'description' => 'Payment from store',
+            'payment_method' => 'pm343'
         ]);
         $response->assertStatus(200);
     }
