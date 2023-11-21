@@ -6,11 +6,11 @@
         <router-view></router-view>
     </div>
 </template>
-<script>
+<script lang="ts">
 import {Cart} from "./store/Cart.js";
 export default {
     created() {
-        Cart.commit('initialiseStore')
+        Cart.commit('initialiseStore');
     },
     data() {
         return {

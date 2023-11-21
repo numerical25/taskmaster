@@ -1,14 +1,14 @@
 
 
 export default class Product {
-    id = '';
-    name = '';
-    price = 0;
-    description= '';
-    quantity = 1;
-    image_url = '';
+    id: string = '';
+    name: string = '';
+    price: number = 0;
+    description: string= '';
+    quantity: number = 1;
+    image_url: string = '';
 
-    constructor(product) {
+    constructor(product: Product) {
         this.id = product.id;
         this.name = product.name;
         this.price = product.price;

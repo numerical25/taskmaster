@@ -43,7 +43,7 @@
 <script>
 import {useRoute, useRouter} from "vue-router";
 import axios from "axios";
-import {API_ENDPOINT} from "../../constants.js";
+import {API_ENDPOINT} from "../../constants.ts";
 import Card from "primevue/card";
 export default {
     components: {Card},

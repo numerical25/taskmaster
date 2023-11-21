@@ -21,11 +21,11 @@
 <script>
 import axios from 'axios';
 import { Modal } from 'flowbite';
-import {API_ENDPOINT} from "../../constants.js"
+import {API_ENDPOINT} from "../../constants.ts"
 import PromptDeleteTask from "../../modals/PromptDeleteTask.vue";
 import Pagination from "../../components/Pagination.vue";
 import TaskList from "../../components/lists/TaskList.vue";
-import ApiService from "../../services/ApiService.js";
+import ApiService from "../../services/ApiService.ts";
 import 'vue3-toastify/dist/index.css';
 import {toast} from "vue3-toastify";
 export default {

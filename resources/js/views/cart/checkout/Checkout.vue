@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import {defineComponent, onBeforeMount, ref} from 'vue';
 import { loadStripe } from '@stripe/stripe-js';
 import { StripeElements, StripeElement } from 'vue-stripe-js';
@@ -59,13 +59,9 @@ export default defineComponent({
         pay() {
             const cardElement = this.card.stripeElement;
             // Access instance methods, e.g. createToken()
-            let billingAddress = new StripeJsAddress('',this.checkout.billingAddress.address,
-            this.checkout.billingAddress.address2,this.checkout.billingAddress.city,this.checkout.billingAddress.state,
-            this.checkout.billingAddress.postalCode,this.checkout.billingAddress.country)
-            if(this.checkout.sameAsBilling) {
-                billingAddress = new StripeJsAddress('',this.checkout.shippingAddress.address,
-                    this.checkout.shippingAddress.address2,this.checkout.shippingAddress.city,this.checkout.shippingAddress.state,
-                    this.checkout.shippingAddress.postalCode,this.checkout.shippingAddress.country)
+            let billingAddress = new StripeJsAddress('Joe Smoe', this.checkout.billingAddress);
+            if(this.checkout.sameAsBilling){
+                billingAddress = new StripeJsAddress('Joe Smoe', this.checkout.shippingAddress);
             }
             this.elms.instance.createToken(cardElement,billingAddress).then((result) => {
                 // Handle result.error or result.token
@@ -73,7 +69,7 @@ export default defineComponent({
             });
         }
     }
-})
+});
 </script>
 
 <template>

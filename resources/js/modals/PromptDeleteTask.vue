@@ -1,7 +1,7 @@
 <script>
     import {Modal} from "flowbite";
     import axios from "axios";
-    import {API_ENDPOINT} from "../constants.js";
+    import {API_ENDPOINT} from "../constants.ts";
 
     export default {
         mounted() {

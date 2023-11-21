@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeMount, onBeforeUnmount, nextTick } from 'vue';
 import * as d3 from 'd3';
 import ApiService from "../../services/ApiService.js";
@@ -9,7 +9,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import customForceCollide from "./ds3/CustomForceCollide.js";
 export default defineComponent({
-    setup() {
+     setup(props) {
         const containerRef = ref(null);
         let simulation;
         const tickerList = ref([]);
@@ -280,16 +280,9 @@ export default defineComponent({
                 }
             }
         });
-
         return {
             containerRef, tickerList
         };
-    },
-    methods: {
-        showMaximizedDialog() {
-            this.visible = true;
-            this.$refs.cryptoInfo.$params.state.maximized = true;
-        },
     },
     data() {
         return {

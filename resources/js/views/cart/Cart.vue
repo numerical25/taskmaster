@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
-import {Cart} from "../../store/Cart.js";
+import {Cart} from "../../store/Cart.ts";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
 import {TrashIcon} from "@heroicons/vue/20/solid/index.js";
 import Button from "primevue/button";

@@ -1,16 +1,17 @@
 <script>
 import {defineComponent} from 'vue'
-import {Cart} from "../../store/Cart.js";
-import Product from "../../models/Product.js";
+import {Cart} from "../../store/Cart.ts";
+import Product from "../../models/Product.ts";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
-import ApiService from "../../services/ApiService.js";
+import ApiService from "../../services/ApiService.ts";
 import { ShoppingCartIcon } from "@heroicons/vue/24/solid/index.js";
 import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
 import Button from "primevue/button";
+import Image from "primevue/image";
 export default defineComponent({
     name: "Products",
-    components: {ShoppingCartIcon, DefaultQuantityControl, Button},
+    components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image},
     mounted() {
         this.apiService.get('products').then((response) => {
             toast("Products Loaded", {
@@ -64,7 +65,7 @@ export default defineComponent({
     </div>
     <div v-for="product in products" class="p-5 flex">
         <div>
-            <img :src="'images/test/products/' + product.image_url" width="150" />
+            <Image :src="'images/test/products/' + product.image_url" width="150" />
         </div>
         <div class="pl-5 flex justify-between w-full">
             <div>
