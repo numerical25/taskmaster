@@ -9,6 +9,7 @@ import {Cart} from "./store/Cart.ts";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import 'primevue/resources/themes/tailwind-light/theme.css';
+import '/node_modules/primeflex/primeflex.css';
 
 const app = createApp(App);
 app.use(PrimeVue);

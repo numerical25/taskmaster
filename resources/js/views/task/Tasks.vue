@@ -1,6 +1,6 @@
 <template>
         <div class="flex justify-between px-5 pb-8 pt-4">
-            <h1 class="text-4xl font-bold">Tasks</h1>
+            <h1 class="text-4xl font-bold text-primary">Tasks</h1>
             <div class="flex">
                 <router-link class="mr-3" :to="{ name: 'products' }">
                     <Button label="View Products" />

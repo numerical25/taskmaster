@@ -1,5 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
+import Button from "primevue/button";
 
 export default defineComponent({
     name: "TaskList",
@@ -8,7 +9,8 @@ export default defineComponent({
             required: true,
             type: Array,
         }
-    }
+    },
+    components: {Button}
 })
 </script>
 
@@ -31,15 +33,12 @@ export default defineComponent({
             <td class="text-center"> {{ record.priority }}</td>
             <td class="text-center"> {{ record.priority_order }}</td>
             <td class="text-center flex justify-end">
-                <button @click="openModal(record.id)"
-                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
-            focus:outline-none focus:ring-blue-300 font-medium rounded-lg mr-4
-            text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                <Button @click="openModal(record.id)"
+                        class="mr-2" type="button">
                     Delete
-                </button>
+                </Button>
                 <router-link :to="{ name: 'task-edit', params: { id: record.id } }">
-                    <button
-                        class="g-blue-500 bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                    <Button>Edit</Button>
                 </router-link>
             </td>
         </tr>

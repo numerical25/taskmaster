@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen overflow-y-auto">
-        <div class="flex px-8 py-2 bg-primary overflow-y-auto justify-center">
-            <h1 class="text-5xl font-bold text-white text-blue-600/100" style="font-family: 'MyFont',serif;">
+        <div class="flex px-8 py-2 overflow-y-auto justify-center border-bottom-2 border-primary">
+            <h1 class="text-5xl font-bold text-primary" style="font-family: 'MyFont',serif;">
                 The Social Machine.<span>tech</span>
             </h1>
         </div>

@@ -41,31 +41,33 @@ export default defineComponent({
         <h1 class="mx-4 font-bold">Cart</h1>
         <router-link to="products"><Button label="View Products" /> </router-link>
     </div>
-    <Card class=" border-2 w-full justify-between" v-for="product in cart.state.products">
-        <template class="w-full" #content>
-            <div class="flex justify-between w-full">
-                <div>
+    <div class="px-4">
+        <Card class="w-full justify-between mb-4" v-for="product in cart.state.products">
+            <template class="w-full" #content>
+                <div class="flex justify-between w-full">
                     <div>
-                        <Image :src="'images/test/products/' + product.image_url" width="150" preview />
+                        <div>
+                            <Image :src="'images/test/products/' + product.image_url" width="150" preview />
+                        </div>
+                        <div class="font-bold">
+                            {{product.name}}
+                            {{USDollar.format(product.price)}}
+                        </div>
                     </div>
-                    <div class="font-bold">
-                        {{product.name}}
-                        {{USDollar.format(product.price)}}
+                    <div class="w-44 flex flex-col items-center">
+                        <default-quantity-control v-model="product.quantity"></default-quantity-control>
+                        <div class="w-full flex justify-center mt-3 ">
+                            <Button label="Delete" icon="pi pi-trash" class="w-full" />
+                        </div>
                     </div>
                 </div>
-                <div class="w-44 flex flex-col items-center">
-                    <default-quantity-control v-model="product.quantity"></default-quantity-control>
-                    <div class="w-full flex justify-center mt-3 ">
-                        <Button label="Delete" icon="pi pi-trash" class="w-full" />
-                    </div>
-                </div>
-            </div>
-        </template>
-    </Card>
+            </template>
+        </Card>
+    </div>
     <div class="px-8">
         <b>Total:</b> {{ USDollar.format(cart.getters.totalCost)}}
     </div>
-    <div class="px-8 py-2 mb-5 flex justify-between">
+    <div class="px-4 py-2 mb-5 flex justify-between">
             <Button label="Empty Cart" @click="emptyCart" />
             <router-link :to="{name: 'checkout'}"><Button label="Checkout" /> </router-link>
     </div>
