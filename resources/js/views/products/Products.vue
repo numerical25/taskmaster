@@ -10,6 +10,7 @@ import 'vue3-toastify/dist/index.css';
 import Button from "primevue/button";
 import Image from "primevue/image";
 import Paginator from "primevue/paginator";
+import PaginationData from "../../models/PaginationData.ts";
 export default defineComponent({
     name: "Products",
     components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image, Paginator},
@@ -34,7 +35,7 @@ export default defineComponent({
             apiService: new ApiService(),
             paginator: {},
             currentPage: Number(0),
-            paginationData: ''
+            paginationData: new PaginationData()
         }
     },
     methods: {
@@ -53,8 +54,6 @@ export default defineComponent({
             });
         },
         page(event) {
-            console.log(this.paginator.first);
-            const path  = this.paginationData.path;
             this.apiService.get('products?page='+(Number(this.currentPage) + 1)).then((response) => {
                 toast("Products Loaded", {
                     autoClose: 1000,
@@ -81,8 +80,7 @@ export default defineComponent({
     </div>
     <div class="flex justify-center">
         <Paginator ref="paginator" v-model:first="currentPage" @page="page($event)" :rows="1"
-                   :totalRecords="120" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
-            {{currentPage}}
+                   :totalRecords="paginationData.last_page" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
     </div>
     <div v-for="product in products" class="p-5 flex">
         <div>
@@ -107,6 +105,10 @@ export default defineComponent({
                 <default-quantity-control class="mt-3" v-model="product.quantity"></default-quantity-control>
             </div>
         </div>
+    </div>
+    <div class="flex justify-center">
+        <Paginator ref="paginator" v-model:first="currentPage" @page="page($event)" :rows="1"
+                   :totalRecords="paginationData.last_page" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
     </div>
 </template>
 
