@@ -13,12 +13,21 @@ class PaymentControllerTest extends TestCase
      */
     public function test_payment(): void
     {
-        $response = $this->post('/api/payment/stripejs/capture',
+        $response = $this->post('/api/payment/stripejs/payment-intent',
         [
             'amount' => 22.59,
             'description' => 'Payment from store',
-            'payment_method' => 'pm343'
+            'payment_method' => 'card'
         ]);
+        $response->assertStatus(200);
+    }
+
+    public function test_capture_payment_fail(): void
+    {
+        $response = $this->post('/api/payment/stripejs/capture',
+            [
+                'client_secret' => 'pi_34352534',
+            ]);
         $response->assertStatus(200);
     }
 }

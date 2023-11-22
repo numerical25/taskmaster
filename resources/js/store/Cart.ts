@@ -12,8 +12,8 @@ export const Cart = new Vuex.Store({
         },
         totalCost(state) {
             let totalCost = 0;
-            state.products.forEach((item) => {
-               totalCost += Number(item.price)
+            state.products.forEach((item: Product) => {
+               totalCost += (Number(item.price) * Number(item.quantity) )
             });
             return totalCost;
         }

@@ -7,10 +7,15 @@ import InputText from "primevue/inputtext";
 import Button from 'primevue/button';
 import ToggleButton from 'primevue/togglebutton';
 import Checkout from "../../../models/Checkout.js";
-import StripeJsAddress from "../../../models/StripeJsAddress.js";
+import {Cart} from "../../../store/Cart";
 import {useToast} from "primevue/usetoast";
 import StripeJsBillingDetails from "../../../models/StripeJsBillingDetails";
 import ApiService from "../../../services/ApiService";
+import StripeJsPaymentIntent from "../../../models/StripeJsPaymentIntent";
+import {AxiosError} from "axios";
+import Toast from 'primevue/toast';
+import StripeJsPaymentIntentResponse from "../../../models/StripeJsPaymentIntentResponse";
+import StripeJsPaymentCaptureRequest from "../../../models/StripeJsPaymentCaptureRequest";
 
 export default defineComponent({
     name: "Checkout",
@@ -20,7 +25,19 @@ export default defineComponent({
         Card,
         InputText,
         Button,
-        ToggleButton
+        ToggleButton,
+        Toast
+    },
+    data() {
+        return {
+            checkout: new Checkout(),
+            toast: useToast(),
+            apiService: new ApiService(),
+            cart: Cart,
+            paymentIntentResponse: new StripeJsPaymentIntentResponse(),
+        }
+    },
+    mounted() {
     },
     setup() {
         const stripeKey = ref('pk_test_51HmfvEJYfVQAz0AAXrdBBYDjubviA9ZW6L82Fruij8CP2yjwmkyo52dAINRbHPDTYmRKsSDhIzIbrFqgGzaMuzOX001JHpvWWg');
@@ -52,13 +69,6 @@ export default defineComponent({
             elms,
         }
     },
-    data() {
-        return {
-            checkout: new Checkout(),
-            toast: useToast(),
-            apiService: new ApiService()
-        }
-    },
     methods: {
         pay() {
             const cardElement = this.card.stripeElement;
@@ -66,19 +76,29 @@ export default defineComponent({
             if(this.checkout.sameAsBilling){
                 billing = new StripeJsBillingDetails('Joe Smoe',null,null, this.checkout.shippingAddress);
             }
-            this.elms.instance.createPaymentMethod({
-                    type: 'card',
-                    card: cardElement,
-                    billing_details: billing
+            var payIntent = new StripeJsPaymentIntent(this.cart.getters.totalCost,
+                'usd','Customer Payment','card');
+            this.apiService.post('payment/stripejs/payment-intent', payIntent).subscribe((result) => {
+                console.log(result);
+                this.paymentIntentResponse = result.data;
+                const captureRequest = new StripeJsPaymentCaptureRequest();
+                captureRequest.id = this.paymentIntentResponse.id;
+                this.paymentIntentResponse = result.data;
+                this.elms.instance.confirmCardPayment(this.paymentIntentResponse.client_secret,{
+                    payment_method: {
+                        type: 'card',
+                        card: cardElement,
+                        billing_details: billing
+                    }
                 }).then((result) => {
-                // Handle result.error or result.token
-                if(result.error) {
-                    this.toast.error(result.error.message);
-                    return;
-                }
-                this.elms.instance.paymentIntents.create([
-                ]);
-                console.log(result)
+                    if(result.error) {
+                        this.toast.error(result.error.message);
+                        return;
+                    }
+                    this.$router.push({ name: 'checkout-success' });
+                });
+            }, (error: AxiosError) => {
+                console.log(error);
             });
         }
     }
@@ -147,6 +167,11 @@ export default defineComponent({
             </template>
         </Card>
     </form>
+    <Card class="mt-4">
+        <template #content>
+            <b>Total: </b> {{cart.getters.totalCost}}
+        </template>
+    </Card>
     <Card class="mt-4">
         <template #content>
             <StripeElements

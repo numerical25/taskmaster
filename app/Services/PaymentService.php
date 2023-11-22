@@ -14,9 +14,18 @@ class PaymentService
     }
 
     public function stripeJsPaymentIntent(PaymentRequest $request) {
-        $this->stripe->paymentIntents->create([
-            'amount' => $request->amount(),
-            'payment_method' => $request->description(),
+        $response = $this->stripe->paymentIntents->create([
+            'amount' => round($request->amount() * 100),
+            'payment_method_types' => [
+                $request->payment_method()
+            ],
+            'description' => $request->description(),
+            'currency'=> $request->currency()
         ]);
+        return $response;
+    }
+
+    public function stripeJsCapture($clientSecrete) {
+        return $this->stripe->paymentIntents->capture($clientSecrete);
     }
 }

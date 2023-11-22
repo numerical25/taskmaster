@@ -1,4 +1,5 @@
 import {API_ENDPOINT} from "../constants.js";
+import {Observable} from "rxjs";
 
 
 export default class ApiService {
@@ -26,8 +27,15 @@ export default class ApiService {
         });
     }
 
-    post(endpoint, data) {
-        return Observable()
+    post(endpoint, data): Observable<any> {
+        return new Observable((observer) => {
+            this.client.post(endpoint, data).then((response) => {
+                observer.next(response);
+                observer.complete();
+            }, (error) => {
+                observer.error(error);
+            });
+        });
     }
 
     next() {

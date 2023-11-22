@@ -7,6 +7,7 @@ import Cart from "./views/cart/Cart.vue";
 import ProductView from "./views/products/View.vue";
 import Checkout from "./views/cart/checkout/Checkout.vue";
 import Test from "./views/bubbles/Test.vue";
+import Success from "./views/cart/checkout/Success.vue";
 
 const routes = [
     {
@@ -18,6 +19,13 @@ const routes = [
         path: '/products',
         component: Products,
         name: 'products',
+        children: [
+        ]
+    },
+    {
+        path: '/products',
+        component: Products,
+        name: 'store',
         children: [
         ]
     },
@@ -43,7 +51,14 @@ const routes = [
         ]
     },
     {
-        path: '/task',
+        path: '/cart/success',
+        component: Success,
+        name: 'checkout-success',
+        children: [
+        ]
+    },
+    {
+        path: '/cart/task',
         component: Tasks,
         name: 'task',
         children: [

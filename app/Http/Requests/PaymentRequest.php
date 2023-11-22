@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ObjectRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +28,7 @@ class PaymentRequest extends FormRequest
             'amount' => 'required|numeric',
             'description' => 'string',
             'currency' => 'string',
-            'payment_method' => 'required|string'
+            'payment_method' => 'required|string',
             // Add more rules for other parameters
         ];
     }
@@ -67,6 +68,11 @@ class PaymentRequest extends FormRequest
     public function description()
     {
         return $this->input('description');
+    }
+
+    public function currency()
+    {
+        return $this->input('currency');
     }
 
     public function payment_method()

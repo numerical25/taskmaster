@@ -1,5 +1,5 @@
 <script>
-import {defineComponent} from 'vue'
+import {defineComponent, ref} from 'vue'
 import {Cart} from "../../store/Cart.ts";
 import Product from "../../models/Product.ts";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
@@ -9,14 +9,17 @@ import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
 import Button from "primevue/button";
 import Image from "primevue/image";
+import Paginator from "primevue/paginator";
 export default defineComponent({
     name: "Products",
-    components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image},
+    components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image, Paginator},
     mounted() {
+        this.paginator = ref('paginator');
         this.apiService.get('products').then((response) => {
             toast("Products Loaded", {
                 autoClose: 1000,
             }); // ToastOptions
+            this.paginationData = response.data;
             this.products = response.data.data.map(productData => new Product(productData));
         });
     },
@@ -28,7 +31,10 @@ export default defineComponent({
                 style: 'currency',
                 currency: 'USD',
             }),
-            apiService: new ApiService()
+            apiService: new ApiService(),
+            paginator: {},
+            currentPage: Number(0),
+            paginationData: ''
         }
     },
     methods: {
@@ -44,6 +50,16 @@ export default defineComponent({
                 toast(error, {
                     autoClose: 1000,
                 }); // ToastOptions
+            });
+        },
+        page(event) {
+            console.log(this.paginator.first);
+            const path  = this.paginationData.path;
+            this.apiService.get('products?page='+(Number(this.currentPage) + 1)).then((response) => {
+                toast("Products Loaded", {
+                    autoClose: 1000,
+                }); // ToastOptions
+                this.products = response.data.data.map(productData => new Product(productData));
             });
         }
     },
@@ -62,6 +78,11 @@ export default defineComponent({
             <router-link to="task"><Button class="mr-3" label="View Tasks" /></router-link>
             <router-link to="cart"><Button label="View Cart" /></router-link>
         </div>
+    </div>
+    <div class="flex justify-center">
+        <Paginator ref="paginator" v-model:first="currentPage" @page="page($event)" :rows="1"
+                   :totalRecords="120" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
+            {{currentPage}}
     </div>
     <div v-for="product in products" class="p-5 flex">
         <div>

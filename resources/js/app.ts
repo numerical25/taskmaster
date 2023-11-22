@@ -16,7 +16,6 @@ app.use(routes);
 app.use(Vuex);
 app.use(ToastService);
 Cart.subscribe((mutation, state) => {
-    // Store the state object as a JSON string
     localStorage.setItem('cart', JSON.stringify(state));
 });
 router.isReady().then(() => app.mount('#app'))

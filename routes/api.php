@@ -30,3 +30,5 @@ Route::get('/crypto', [\App\Http\Controllers\CryptoController::class, 'index']);
 Route::get('/crypto/cptickers', [\App\Http\Controllers\CryptoController::class, 'getCPTickers']);
 
 Route::post('/payment/stripejs/capture', [\App\Http\Controllers\PaymentController::class, 'stripeJsCapture']);
+Route::post('/payment/stripejs/payment-intent', [\App\Http\Controllers\PaymentController::class,
+    'stripeJsPaymentIntent']);
