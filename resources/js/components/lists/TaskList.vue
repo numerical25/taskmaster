@@ -33,12 +33,10 @@ export default defineComponent({
             <td class="text-center"> {{ record.priority }}</td>
             <td class="text-center"> {{ record.priority_order }}</td>
             <td class="text-center flex justify-end">
-                <Button @click="openModal(record.id)"
-                        class="mr-2" type="button">
-                    Delete
-                </Button>
+                <Button icon="pi pi-trash" @click="openModal(record.id)"
+                        class="mr-2" type="button" label="Delete" />
                 <router-link :to="{ name: 'task-edit', params: { id: record.id } }">
-                    <Button>Edit</Button>
+                    <Button label="Edit" icon="pi pi-file-edit"></Button>
                 </router-link>
             </td>
         </tr>

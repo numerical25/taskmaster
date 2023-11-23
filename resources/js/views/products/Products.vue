@@ -74,8 +74,8 @@ export default defineComponent({
             </div>
         </router-link>
         <div class="flex">
-            <router-link to="task"><Button class="mr-3" label="View Tasks" /></router-link>
-            <router-link to="cart"><Button label="View Cart" /></router-link>
+            <router-link :to="{name: 'task'}"><Button class="mr-3" label="View Tasks" /></router-link>
+            <router-link :to="{name: 'cart'}"><Button label="View Cart" /></router-link>
         </div>
     </div>
     <div class="flex justify-center">

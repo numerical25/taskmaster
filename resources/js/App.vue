@@ -1,16 +1,17 @@
 <template>
     <div class="h-screen overflow-y-auto">
-        <div class="flex px-8 py-2 overflow-y-auto justify-center border-bottom-2 border-primary">
-            <h1 class="text-5xl font-bold text-primary" style="font-family: 'MyFont',serif;">
-                The Social Machine.<span>tech</span>
-            </h1>
-        </div>
+        <Header></Header>
         <router-view></router-view>
+        <footer class="px-4 bg-primary">
+            Footer
+        </footer>
     </div>
 </template>
 <script lang="ts">
 import {Cart} from "./store/Cart.js";
+import Header from "./components/layouts/Header.vue";
 export default {
+    components: {Header},
     created() {
         Cart.commit('initialiseStore');
     },

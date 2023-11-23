@@ -1,5 +1,5 @@
 <template>
-        <div class="flex justify-between px-5 pb-8 pt-4">
+        <div class="flex justify-between px-4 pb-3 pt-4">
             <h1 class="text-4xl font-bold text-primary">Tasks</h1>
             <div class="flex">
                 <router-link class="mr-3" :to="{ name: 'products' }">
@@ -10,7 +10,7 @@
                 </router-link>
             </div>
         </div>
-        <div class="rounded-t-xl overflow-hidden p-8">
+        <div class="rounded-t-xl overflow-hidden pb-8 pt-3 px-4">
             <task-list :records="records"></task-list>
         </div>
         <pagination :from-prop="apiService.data.from" :to-prop="apiService.data.to" :total-prop="apiService.data.total"
