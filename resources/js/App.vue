@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen overflow-y-auto">
+    <div class="h-screen overflow-y-auto bg-primary-reverse">
         <Header></Header>
         <router-view></router-view>
         <Footer></Footer>

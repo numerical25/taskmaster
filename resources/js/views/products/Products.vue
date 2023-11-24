@@ -96,7 +96,7 @@ export default defineComponent({
             </div>
         </div>
     </div>
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-4">
         <Paginator ref="paginator" v-model:first="currentPage" @page="page($event)" :rows="1"
                    :totalRecords="paginationData.last_page" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
     </div>

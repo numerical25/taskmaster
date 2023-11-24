@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
     <!-- Fonts -->
 </head>
-<body class="antialiased h-screen overflow-y-auto bg-gradient-to-r from-emerald-50 to-teal-100" style="height: 100vh">
+<body class="antialiased h-screen overflow-y-auto" style="height: 100vh">
 <div id="app" class="h-screen overflow-y-auto">
     @vite('resources/js/app.ts')
 </div>
