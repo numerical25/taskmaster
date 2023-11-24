@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         try {
-            return Product::find($id);
+            return Product::with('RelatedProduct.Related')->find($id);
         } catch (\Exception $e) {
             response()->json(['message'=> 'Issue getting Product Details']);
         }

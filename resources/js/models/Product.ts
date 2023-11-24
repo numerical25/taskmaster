@@ -8,6 +8,7 @@ export default class Product {
     quantity: number = 1;
     image_url: string = '';
     rating: number = 0;
+    related_product = [];
 
     constructor(product: Product) {
         if(product) {

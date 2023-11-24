@@ -38,11 +38,11 @@ export default defineComponent({
 
 <template>
     <div class="flex mx-4 justify-between my-2">
-        <h1 class="mx-4 font-bold">Cart</h1>
+        <h1 class="mx-4 font-bold text-6xl text-primary">Cart</h1>
         <router-link to="products"><Button label="View Products" /> </router-link>
     </div>
     <div class="px-4">
-        <Card class="w-full justify-between mb-4" v-for="product in cart.state.products">
+        <Card class="w-full justify-between mb-4 border-3 border-primary" v-for="product in cart.state.products">
             <template class="w-full" #content>
                 <div class="flex justify-between w-full">
                     <div>
@@ -50,7 +50,8 @@ export default defineComponent({
                             <Image :src="'images/test/products/' + product.image_url" width="150" preview />
                         </div>
                         <div class="font-bold">
-                            {{product.name}}
+                            <router-link :to="{name: 'product-details', params: {id: product.id}}">{{product.name}}
+                            </router-link>
                             {{USDollar.format(product.price)}}
                         </div>
                     </div>

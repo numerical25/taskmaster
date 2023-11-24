@@ -107,13 +107,13 @@ export default defineComponent({
 
 <template>
 <div class="px-5 pt-4">
-    <Card class="mb-2">
+    <Card class="mb-2 border-primary border-3">
         <template #content>
             <h1 class="font-bold text-5xl">Checkout</h1>
         </template>
     </Card>
     <form class="w-full">
-        <Card class="mb-5">
+        <Card class="mb-5 border-3 border-primary">
             <template #content>
                 <div>
                     <h1 class="font-bold text-4xl">Shipping</h1>
@@ -141,7 +141,7 @@ export default defineComponent({
         <div class="flex items-center">
             <ToggleButton v-model="checkout.sameAsBilling" class="mr-5" /> <span>Same as Billing ?</span>
         </div>
-        <Card class="mt-4">
+        <Card class="mt-4 border-3 border-primary">
             <template #content>
                 <div>
                     <h1 class="font-bold text-4xl mt-3">Billing</h1>
@@ -167,12 +167,12 @@ export default defineComponent({
             </template>
         </Card>
     </form>
-    <Card class="mt-4">
+    <Card class="mt-4  border-3 border-primary">
         <template #content>
             <b>Total: </b> {{cart.getters.totalCost}}
         </template>
     </Card>
-    <Card class="mt-4">
+    <Card class="mt-4  border-3 border-primary">
         <template #content>
             <StripeElements
                 v-if="stripeLoaded"

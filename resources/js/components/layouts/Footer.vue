@@ -7,8 +7,11 @@ export default defineComponent({
 </script>
 
 <template>
-    <footer class="p-4 bg-primary-800 text-w ">
-        Footer
+    <footer class="p-4 bg-primary ">
+        <ul>
+            <li>About Us</li>
+            <li>Contact Us</li>
+        </ul>
     </footer>
 </template>
 

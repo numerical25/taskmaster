@@ -17,4 +17,8 @@ class Product extends Model
         'price',
         'image_url'
     ];
+
+    public function RelatedProduct() {
+        return $this->hasMany(RelatedProduct::class);
+    }
 }

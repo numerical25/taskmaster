@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->float('price');
             $table->string('image_url');
+            $table->jsonb('attributes')->nullable();
             $table->timestamps();
         });
     }

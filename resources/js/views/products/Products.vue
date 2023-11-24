@@ -41,9 +41,6 @@ export default defineComponent({
         }
     },
     methods: {
-        formatCurrency(value) {
-            return this.USDollar.format(value);
-        },
         page(event) {
             this.apiService.get('products?page='+(Number(this.currentPage) + 1)).then((response) => {
                 toast("Products Loaded", {
@@ -87,7 +84,7 @@ export default defineComponent({
                     </router-link>
                 </div>
                 <div>
-                    {{formatCurrency(product.price)}}
+                    {{cartService.formatCurrency(product.price)}}
                 </div>
                 <div>
                     {{product.description}}

@@ -5,6 +5,10 @@ import Product from "../models/Product";
 
 export default class CartService {
 
+    USDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    });
     addToCart(product: Product) {
         Cart.dispatch('addToCart', product).then((response) => {
             toast(response, {
@@ -15,5 +19,9 @@ export default class CartService {
                 autoClose: 1000,
             }); // ToastOptions
         });
+    }
+
+    formatCurrency(value: number) {
+        return this.USDollar.format(value);
     }
 }

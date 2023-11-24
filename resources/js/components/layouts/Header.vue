@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex px-8 py-2 overflow-y-auto justify-center border-bottom-2 border-primary bg-white">
+    <div class="flex px-8 py-2 overflow-y-auto justify-center border-bottom-2 border-primary bg-primary-reverse">
         <router-link to="/">
             <h1 class="text-5xl font-bold text-primary" style="font-family: 'MyFont',serif;">
                 The Social Machine.<span>tech</span>
