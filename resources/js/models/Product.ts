@@ -7,12 +7,15 @@ export default class Product {
     description: string= '';
     quantity: number = 1;
     image_url: string = '';
+    rating: number = 0;
 
     constructor(product: Product) {
-        this.id = product.id;
-        this.name = product.name;
-        this.price = product.price;
-        this.description = product.description;
-        this.image_url = product.image_url;
+        if(product) {
+            this.id = product.id;
+            this.name = product.name;
+            this.price = product.price;
+            this.description = product.description;
+            this.image_url = product.image_url;
+        }
     }
 }

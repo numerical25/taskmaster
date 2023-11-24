@@ -14,4 +14,13 @@ class ProductController extends Controller
         $orderDirection = $request->query('orderDirection', 'asc');
         return Product::orderBy($orderBy, $orderDirection)->paginate(10);
     }
+
+    public function detail($id)
+    {
+        try {
+            return Product::find($id);
+        } catch (\Exception $e) {
+            response()->json(['message'=> 'Issue getting Product Details']);
+        }
+    }
 }

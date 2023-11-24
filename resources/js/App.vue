@@ -2,16 +2,15 @@
     <div class="h-screen overflow-y-auto">
         <Header></Header>
         <router-view></router-view>
-        <footer class="px-4 bg-primary">
-            Footer
-        </footer>
+        <Footer></Footer>
     </div>
 </template>
 <script lang="ts">
 import {Cart} from "./store/Cart.js";
 import Header from "./components/layouts/Header.vue";
+import Footer from "./components/layouts/Footer.vue";
 export default {
-    components: {Header},
+    components: {Header, Footer},
     created() {
         Cart.commit('initialiseStore');
     },
