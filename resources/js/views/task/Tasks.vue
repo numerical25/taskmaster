@@ -93,7 +93,7 @@ export default {
             this.modal.hide();
         },
         getTasks(url = null) {
-            this.apiService.get(url).then((response) => {
+            this.apiService.get(url).subscribe((response) => {
                 this.records = response.data.data;
             });
         },

@@ -9,8 +9,8 @@ export default defineComponent({
 <template>
     <footer class="p-4 bg-primary ">
         <ul>
-            <li>About Us</li>
-            <li>Contact Us</li>
+            <li class="underline"><router-link to="">About Us</router-link></li>
+            <li class="underline">Contact Us</li>
         </ul>
     </footer>
 </template>

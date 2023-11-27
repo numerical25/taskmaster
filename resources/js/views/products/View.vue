@@ -10,6 +10,7 @@ import Button from "primevue/button";
 import Rating from "primevue/rating";
 import DefaultQuantityControl from "../../components/controls/quantity-box/DefaultQuantityControl.vue";
 import RelatedProduct from "../../components/store/product/RelatedProduct.vue";
+import Card from "primevue/card";
 
 export default defineComponent({
     name: "View",
@@ -41,7 +42,7 @@ export default defineComponent({
             this.loadProduct(); // Replace with the function that loads your data
         },
     },
-    components: {Image, Button, DefaultQuantityControl, Rating, RelatedProduct}
+    components: {Image, Button, DefaultQuantityControl, Rating, RelatedProduct, Card}
 })
 </script>
 
@@ -61,17 +62,21 @@ export default defineComponent({
                 </div>
             </div>
             <div class="col-6">
-                <h1 class="text-4xl py-2 text-primary">Product Details</h1>
-                <div class="description">
-                    <p class="font-bold py-2 text-color-secondary">Description</p>
-                    <p>{{product.description}}</p>
-                    <p class="py-2"><span class="font-bold text-color-secondary">Price: </span> {{cartService.formatCurrency(product.price)}}</p>
-                    <div class="py-2 col-3">
-                        <Button label="Add to Cart" class="w-full" icon="pi pi-cart-plus" @click="cartService.addToCart(product)" />
-                        <default-quantity-control class="mt-3"
-                                                  v-model="product.quantity"></default-quantity-control>
-                    </div>
-                </div>
+                <Card>
+                    <template #content>
+                        <h1 class="text-4xl py-2 font-bold">Product Details</h1>
+                        <div class="description">
+                            <p class="font-bold py-2">Description</p>
+                            <p>{{product.description}}</p>
+                            <p class="py-2"><span class="font-bold">Price: </span> {{cartService.formatCurrency(product.price)}}</p>
+                            <div class="py-2 col-3">
+                                <Button label="Add to Cart" class="w-full" icon="pi pi-cart-plus" @click="cartService.addToCart(product)" />
+                                <default-quantity-control class="mt-3"
+                                                          v-model="product.quantity"></default-quantity-control>
+                            </div>
+                        </div>
+                    </template>
+                </Card>
             </div>
         </div>
         <RelatedProduct :related_products="product.related_product"></RelatedProduct>

@@ -16,14 +16,13 @@ export default class ApiService {
     }
 
     get(endpoint, params = {}) {
-        return new Promise((resolve, reject) => {
+        return new Observable((observer) => {
             this.client.get(endpoint, params).then((response) => {
                 this.data = response.data;
-                this.nextPageUrl = response.data.data.next_page_url;
-                this.lastPageUrl = response.data.data.prev_page_url;
-                resolve(response);
+                observer.next(response);
+                observer.complete();
             }, (error) => {
-                reject(error);
+                observer.error(error);
             });
         });
     }

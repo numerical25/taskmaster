@@ -27,6 +27,9 @@ Route::delete('/tasks/{id}/delete', [\App\Http\Controllers\TaskController::class
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}/detail', [\App\Http\Controllers\ProductController::class, 'detail']);
 
+Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index']);
+Route::get('/blog/{id}/view', [\App\Http\Controllers\BlogController::class, 'view']);
+
 Route::get('/crypto', [\App\Http\Controllers\CryptoController::class, 'index']);
 Route::get('/crypto/cptickers', [\App\Http\Controllers\CryptoController::class, 'getCPTickers']);
 

@@ -17,7 +17,7 @@ export default defineComponent({
     components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image, Paginator},
     mounted() {
         this.paginator = ref('paginator');
-        this.apiService.get('products').then((response) => {
+        this.apiService.get('products').subscribe((response) => {
             toast("Products Loaded", {
                 autoClose: 1000,
             }); // ToastOptions
@@ -42,7 +42,7 @@ export default defineComponent({
     },
     methods: {
         page(event) {
-            this.apiService.get('products?page='+(Number(this.currentPage) + 1)).then((response) => {
+            this.apiService.get('products?page='+(Number(this.currentPage) + 1)).subscribe((response) => {
                 toast("Products Loaded", {
                     autoClose: 1000,
                 }); // ToastOptions
