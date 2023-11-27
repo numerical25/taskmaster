@@ -27,6 +27,8 @@ Route::delete('/tasks/{id}/delete', [\App\Http\Controllers\TaskController::class
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}/detail', [\App\Http\Controllers\ProductController::class, 'detail']);
 
+Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index']);
+
 Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index']);
 Route::get('/blog/{id}/view', [\App\Http\Controllers\BlogController::class, 'view']);
 
