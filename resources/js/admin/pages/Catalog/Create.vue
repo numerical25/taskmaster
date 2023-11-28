@@ -4,10 +4,11 @@ import ApiService from "../../../services/ApiService";
 import TreeTable from "primevue/treetable";
 import Column from "primevue/column";
 import Card from "primevue/card";
-import TreeNodeService from "../../../services/TreeNodeService";
+import Button from "primevue/button";
+import AutoComplete from "primevue/autocomplete";
 
 export default defineComponent({
-    components: {TreeTable, Column, Card},
+    components: {TreeTable, Column, Card, Button, AutoComplete},
     name: "Create",
     data() {
         return {
@@ -17,20 +18,30 @@ export default defineComponent({
     },
     mounted() {
         this.apiService.get('category').subscribe(response => {
+            const cats = [];
             response.data.forEach(item => {
-                this.categories.push(new TreeNodeService(item.id, item.name, item.name,'', item.children));
+                cats.push({
+                    key: item.id,
+                    data: {
+                        name: item.name,
+                        created_at: item.created_at
+                    }
+                });
             });
+            this.categories = cats;
         });
     }
 })
 </script>
 
 <template>
-    <div class="px-4">
-        {{categories}}
+    <div class="p-4">
         <Card class="bg-primary">
             <template #header>
-                Create new Catalog
+                <div class="flex justify-between">
+                    <h1 class="font-bold pl-4 pt-3">Site Categories</h1>
+                    <Button class="bg-green-800 hover:bg-green-600" label="Create Category" />
+                </div>
             </template>
             <template #content>
                 <TreeTable :value="categories">

@@ -10,8 +10,8 @@ export default class TreeNodeService {
     children: TreeNodeService[];
 
 
-    constructor(key: string, label: string, data: string, icon: string, children: TreeNodeService[]) {
-        this.key = key;
+    constructor(key: string, label: string, data: string, icon: string, children: TreeNodeService[] = []) {
+        this.key = `node-${key}`;
         this.label = label;
         this.data = data;
         this.icon = icon;
