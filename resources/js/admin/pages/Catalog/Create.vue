@@ -6,14 +6,18 @@ import Column from "primevue/column";
 import Card from "primevue/card";
 import Button from "primevue/button";
 import AutoComplete from "primevue/autocomplete";
+import Sidebar from "../../components/layouts/SideBar.vue";
 
 export default defineComponent({
-    components: {TreeTable, Column, Card, Button, AutoComplete},
+    components: {TreeTable, Column, Card, Button, AutoComplete, Sidebar},
     name: "Create",
     data() {
         return {
             apiService: new ApiService(),
-            categories: []
+            categories: [],
+            items: [],
+            newCategory: '',
+            visible: false
         }
     },
     mounted() {
@@ -30,12 +34,39 @@ export default defineComponent({
             });
             this.categories = cats;
         });
+    },
+    methods: {
+        searchCategories(event) {
+            const params = {'name' : event.query};
+            this.apiService.get('category/search', {params}).subscribe(response => {
+               console.log(response);
+               this.items = response.data;
+            });
+        },
+        toggle() {
+            this.visible = !this.visible;
+        }
     }
 })
 </script>
 
 <template>
+    <Sidebar :visible="visible"></Sidebar>
     <div class="p-4">
+        <Button label="Show" @click="toggle"></Button>
+        <div class="p-3">
+            <div class="flex-row">
+               <span class="p-float-label">
+                <AutoComplete class="bg-primary-reverse "
+                              option-label="name"
+                              :suggestions="items"
+                              input-id="category"
+                              v-model="newCategory" @complete="searchCategories"></AutoComplete>
+                   <label for="category">Add Category</label>
+               </span>
+                {{newCategory.id}}
+            </div>
+        </div>
         <Card class="bg-primary">
             <template #header>
                 <div class="flex justify-between">
