@@ -117,6 +117,7 @@ export default defineComponent({
             </template>
             <template #content>
                 <DataTable :value="siteCategories" @rowReorder="onRowReorder">
+                    <Column expander style="width: 5rem" />
                     <Column rowReorder headerStyle="width: 3rem" :reorderableColumn="false" />
                     <Column field="name" header="Name" ></Column>
                     <Column field="created_at" header="Created At"></Column>
