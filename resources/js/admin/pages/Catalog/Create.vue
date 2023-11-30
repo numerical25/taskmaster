@@ -59,7 +59,7 @@ export default defineComponent({
         onColReorder() {
         },
         onRowReorder(event) {
-            this.products = event.value;
+            this.siteCategories = event.value;
         },
         searchCategories(event) {
             const params = {'name' : event.query};
@@ -86,13 +86,6 @@ export default defineComponent({
                     this.categories = cats;
                 });
         },
-        onHandleClick(index, data) {
-            console.log(index);
-        }, onDrop() {
-
-        }, clearHandle() {
-
-        }
     }
 })
 </script>
@@ -123,7 +116,7 @@ export default defineComponent({
                 </div>
             </template>
             <template #content>
-                <DataTable :value="siteCategories">
+                <DataTable :value="siteCategories" @rowReorder="onRowReorder">
                     <Column rowReorder headerStyle="width: 3rem" :reorderableColumn="false" />
                     <Column field="name" header="Name" ></Column>
                     <Column field="created_at" header="Created At"></Column>
