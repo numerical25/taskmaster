@@ -7,15 +7,17 @@ import Avatar from "primevue/avatar";
 export default defineComponent({
     name: "SideBar",
     components: {Sidebar, Button, Avatar},
+    emits: ['toggle'],
+    setup(props, {emit}) {
+        const toggle = () => {
+            emit('toggle');
+        };
+        return {toggle};
+    },
     props: {
         visible: {
             type: Boolean,
             required: true,
-        }
-    },
-    methods: {
-        toggle() {
-            this.$props.visible = !this.$props.visible;
         }
     }
 })
@@ -27,10 +29,10 @@ export default defineComponent({
             <div class="flex flex-column h-full">
                 <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
                 <span class="inline-flex align-items-center gap-2">
-                    <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="..." fill="var(--primary-color-color)" />
-                        <path d="..." fill="var(--text-color)" />
-                    </svg>
+<!--                    <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <path d="..." fill="var(&#45;&#45;primary-color-color)" />-->
+<!--                        <path d="..." fill="var(&#45;&#45;text-color)" />-->
+<!--                    </svg>-->
                     <span class="font-semibold text-1xl text-primary">The Social Machine.tech</span>
                 </span>
                     <span>

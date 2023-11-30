@@ -29,6 +29,9 @@ Route::get('/products/{id}/detail', [\App\Http\Controllers\ProductController::cl
 
 Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index']);
 Route::get('/category/search', [\App\Http\Controllers\CategoryController::class, 'search']);
+Route::post('/category/create', [\App\Http\Controllers\CategoryController::class, 'create']);
+
+Route::get('/site-category', [\App\Http\Controllers\SiteCategoryController::class, 'index']);
 
 Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index']);
 Route::get('/blog/{id}/view', [\App\Http\Controllers\BlogController::class, 'view']);
