@@ -30,36 +30,35 @@ export default defineComponent({
         ];
     },
     mounted() {
-        this.apiService.get('site-category').subscribe(response => {
-           console.log(response);
-           const cats = [];
-           response.data.forEach(item => {
-                cats.push({
-                    name: item.child.name,
-                    created_at: item.created_at
-                });
-           });
-           this.siteCategories = cats;
-        });
-        this.apiService.get('category').subscribe(response => {
-            const cats = [];
-            response.data.forEach(item => {
-                cats.push({
-                    key: item.id,
-                    data: {
-                        name: item.name,
-                        created_at: item.created_at
-                    }
-                });
-            });
-            this.categories = cats;
-        });
+        this.getSiteCategories();
     },
     methods: {
-        onColReorder() {
+        getSiteCategories() {
+            this.apiService.get('site-category').subscribe(response => {
+                this.siteCategories = this.buildTree(response.data);
+            });
         },
         onRowReorder(event) {
             this.siteCategories = event.value;
+        },
+        buildTree(data) {
+            const cats = [];
+            if(!data) {
+                return [];
+            }
+            data.forEach(item => {
+                cats.push({
+                    key: item.id,
+                    data: {
+                        id: item.id,
+                        name: item.child.name,
+                        created_at: item.created_at
+                    },
+                    label: item.child.name,
+                    children: this.buildTree(item.child.children)
+                });
+            });
+            return cats;
         },
         searchCategories(event) {
             const params = {'name' : event.query};
@@ -74,10 +73,12 @@ export default defineComponent({
                 .post('category/create', data)
                 .subscribe(response => {
                     const cats = [];
+                    this.getSiteCategories();
                     response.data.forEach(item => {
                         cats.push({
                             key: item.id,
                             data: {
+                                id: item.id,
                                 name: item.name,
                                 created_at: item.created_at
                             }
@@ -116,28 +117,32 @@ export default defineComponent({
                 </div>
             </template>
             <template #content>
-                <DataTable :value="siteCategories" @rowReorder="onRowReorder">
+                <TreeTable draggable="true"  :value="siteCategories" @rowReorder="onRowReorder">
+                    <Column field="id" header="Move" style="width: 2rem">
+                        <template #body="{data, node}" >
+                            <i class="pi pi-align-justify" />
+                        </template>
+                    </Column>
                     <Column expander style="width: 5rem" />
-                    <Column rowReorder headerStyle="width: 3rem" :reorderableColumn="false" />
                     <Column field="name" header="Name" ></Column>
-                    <Column field="created_at" header="Created At"></Column>
-                </DataTable>
-            </template>
-        </Card>
-        <Card class="bg-primary">
-            <template #header>
-                <div class="flex justify-between">
-                    <h1 class="font-bold pl-4 pt-3">Global Categories</h1>
-                    <Button class="bg-green-800 hover:bg-green-600" label="Create Category" />
-                </div>
-            </template>
-            <template #content>
-                <TreeTable :value="categories">
-                    <Column field="name" header="Name" expander></Column>
-                    <Column field="created_at" header="Created At"></Column>
+                    <Column field="created_at" header="Created At" ></Column>
                 </TreeTable>
             </template>
         </Card>
+<!--        <Card class="bg-primary">-->
+<!--            <template #header>-->
+<!--                <div class="flex justify-between">-->
+<!--                    <h1 class="font-bold pl-4 pt-3">Global Categories</h1>-->
+<!--                    <Button class="bg-green-800 hover:bg-green-600" label="Create Category" />-->
+<!--                </div>-->
+<!--            </template>-->
+<!--            <template #content>-->
+<!--                <TreeTable :value="categories">-->
+<!--                    <Column field="name" header="Name" expander></Column>-->
+<!--                    <Column field="created_at" header="Created At"></Column>-->
+<!--                </TreeTable>-->
+<!--            </template>-->
+<!--        </Card>-->
     </div>
 </template>
 

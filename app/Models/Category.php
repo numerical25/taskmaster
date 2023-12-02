@@ -16,12 +16,13 @@ class Category extends Model
     ];
     protected $guarded = ['id'];
 
-    public function Parents() {
-        return $this->hasMany(SiteCategory::class,'parent_id');
+    public function Child() {
+        return $this->belongsTo(Category::class);
     }
 
+
     public function Children() {
-        return $this->hasMany(SiteCategory::class,'child_id');
+        return $this->hasMany(SiteCategory::class,'parent_id')->with('Child');
     }
 
 }

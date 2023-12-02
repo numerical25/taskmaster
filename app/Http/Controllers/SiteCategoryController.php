@@ -12,10 +12,14 @@ class SiteCategoryController extends Controller
 
     public function index() {
         try {
-            $response = SiteCategory::with('Child.Children')->get();
+            $response = SiteCategory::with(['Child'])->whereNull('parent_id')->get();
             return $response;
         } catch (\Exception $e) {
 
         }
+    }
+
+    public function update() {
+
     }
 }

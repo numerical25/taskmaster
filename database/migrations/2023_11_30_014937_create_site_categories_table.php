@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('site_categories', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('site_id')->nullable();
             $table->uuid('parent_id')->nullable();
             $table->uuid('child_id');

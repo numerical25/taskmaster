@@ -26,6 +26,10 @@ class SiteCategory extends Model
     }
 
     public function Child() {
-        return $this->belongsTo(Category::class, 'child_id');
+        return $this->belongsTo(Category::class, 'child_id')->with('Children');
+    }
+
+    public function Children() {
+        return $this->hasMany(SiteCategory::class, 'parent_id');
     }
 }
