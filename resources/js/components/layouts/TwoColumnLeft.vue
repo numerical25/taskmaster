@@ -9,7 +9,7 @@ export default defineComponent({
 </script>
 
 <template>
-<div class="w-full flex">
+<div class="px-4">
     <div class="col-3">
         Left Column
     </div>

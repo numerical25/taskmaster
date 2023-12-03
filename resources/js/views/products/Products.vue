@@ -12,9 +12,10 @@ import Image from "primevue/image";
 import Paginator from "primevue/paginator";
 import PaginationData from "../../models/PaginationData.ts";
 import CartService from "../../services/CartService.ts";
+import StoreNav from "../../components/layouts/store/StoreNav.vue";
 export default defineComponent({
     name: "Products",
-    components: {ShoppingCartIcon, DefaultQuantityControl, Button, Image, Paginator},
+    components: {StoreNav, ShoppingCartIcon, DefaultQuantityControl, Button, Image, Paginator},
     mounted() {
         this.paginator = ref('paginator');
         this.apiService.get('products').subscribe((response) => {
@@ -54,18 +55,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex justify-between pt-4 px-5">
-        <router-link class="flex" to="cart">
-            <ShoppingCartIcon class="h-8 w-8 text-primary" />
-            <div class="bg-primary h-8 px-3 text-white font-bold rounded text-center pt-1 ml-2">
-                {{cart.state.products.length}}
-            </div>
-        </router-link>
-        <div class="flex">
-            <router-link :to="{name: 'task'}"><Button class="mr-3" label="View Tasks" /></router-link>
-            <router-link :to="{name: 'cart'}"><Button label="View Cart" /></router-link>
-        </div>
-    </div>
+    <StoreNav/>
     <div class="flex justify-center">
         <Paginator ref="paginator" v-model:first="currentPage" @page="page($event)" :rows="1"
                    :totalRecords="paginationData.last_page" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
