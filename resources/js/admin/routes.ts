@@ -14,6 +14,7 @@ import Editor from "./pages/Editor/Editor.vue";
 
 const routes = [
     {
+        // Todo: Need to fix all routes to have a children structure
         path: '/admin',
         children: [
             {

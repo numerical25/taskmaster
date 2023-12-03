@@ -15,7 +15,7 @@ const app = createApp(App);
 app.directive('ripple', Ripple);
 app.use(PrimeVue, {ripple: true});
 app.use(routes);
-app.use(Vuex);
+// app.use(Vuex);
 app.use(ToastService);
 Cart.subscribe((mutation, state) => {
     localStorage.setItem('cart', JSON.stringify(state));

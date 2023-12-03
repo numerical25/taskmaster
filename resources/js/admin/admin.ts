@@ -14,7 +14,7 @@ import '/node_modules/primeflex/primeflex.css';
 const app = createApp(Admin);
 app.use(PrimeVue);
 app.use(routes);
-app.use(Vuex);
+// app.use(Vuex);
 app.use(ToastService);
 Cart.subscribe((mutation, state) => {
     localStorage.setItem('cart', JSON.stringify(state));
