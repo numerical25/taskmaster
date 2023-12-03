@@ -10,6 +10,7 @@ import ToastService from 'primevue/toastservice';
 import 'primevue/resources/themes/tailwind-light/theme.css';
 import '/node_modules/primeflex/primeflex.css';
 
+
 const app = createApp(Admin);
 app.use(PrimeVue);
 app.use(routes);

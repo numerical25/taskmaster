@@ -10,6 +10,7 @@ import Test from "../views/bubbles/Test.vue";
 import Success from "../views/cart/checkout/Success.vue";
 import Blog from "../views/blog/Blog.vue";
 import BlogView from "../views/blog/View.vue";
+import Editor from "./pages/Editor/Editor.vue";
 
 const routes = [
     {
@@ -18,9 +19,9 @@ const routes = [
         name: 'home'
     },
     {
-        path: '/products',
-        component: Products,
-        name: 'products',
+        path: '/admin/editor',
+        component: Editor,
+        name: 'editor',
         children: [
         ]
     },
