@@ -8,10 +8,6 @@ export default defineComponent({
             type: Array,
             required: false
         },
-        mainList: {
-          type: Array,
-          required: false
-        },
         showList: {
             type: Boolean,
             required: false,
@@ -77,7 +73,7 @@ export default defineComponent({
     },
     data() {
         return {
-            showChildList: false,
+            showChildList: false
         }
     },
 });
@@ -96,7 +92,7 @@ export default defineComponent({
                 {{ node.label }}
             </span>
             <span v-if="node.show">
-                <catalog-list :main-list="list" :is-child="true" @on-drop-end="handleDropEnd" :list="node.children"></catalog-list>
+                <catalog-list :is-child="true" @on-drop-end="handleDropEnd" :list="node.children"></catalog-list>
             </span>
         </li>
     </ul>

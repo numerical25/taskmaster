@@ -120,7 +120,7 @@ export default defineComponent({
         <Card class="bg-primary">
             <template #header>
                 <div class="flex justify-between">
-                    <h1 class="font-bold pl-4 pt-3">Site Categories</h1>
+                    <h1 class="font-bold pl-4 pt-3 text-primary">Site Categories</h1>
                     <Button class="bg-green-800 hover:bg-green-600" label="Create Category" />
                 </div>
             </template>
