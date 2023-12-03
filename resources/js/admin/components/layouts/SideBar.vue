@@ -56,10 +56,24 @@ export default defineComponent({
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <router-link :to="{name: 'catalog'}"
+                                        class="flex align-items-center
+                                        cursor-pointer p-3 border-round text-700
+                                        hover:surface-100 transition-duration-150
+                                        transition-colors p-ripple">
                                         <i class="pi pi-bookmark mr-2"></i>
-                                        <span class="font-medium">Bookmarks</span>
-                                    </a>
+                                        <span class="font-medium">Site Catalog</span>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{name: 'editor'}"
+                                                 class="flex align-items-center
+                                        cursor-pointer p-3 border-round text-700
+                                        hover:surface-100 transition-duration-150
+                                        transition-colors p-ripple">
+                                        <i class="pi pi-bookmark mr-2"></i>
+                                        <span class="font-medium">Editor</span>
+                                    </router-link>
                                 </li>
                                 <li>
                                     <a

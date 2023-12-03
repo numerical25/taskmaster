@@ -9,7 +9,7 @@ export default defineComponent({
 </script>
 
 <template>
-<div class="px-4">
+<div class="px-4 grid">
     <div class="col-3">
         Left Column
     </div>

@@ -15,14 +15,21 @@ import Editor from "./pages/Editor/Editor.vue";
 const routes = [
     {
         path: '/admin',
-        component: CreateAdmin,
-        name: 'home'
-    },
-    {
-        path: '/admin/editor',
-        component: Editor,
-        name: 'editor',
         children: [
+            {
+                path: '',
+                component: CreateAdmin,
+                name: 'catalog',
+                children: [
+                ]
+            },
+            {
+                path: 'editor',
+                component: Editor,
+                name: 'editor',
+                children: [
+                ]
+            },
         ]
     },
     {

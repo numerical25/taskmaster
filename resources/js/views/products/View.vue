@@ -48,10 +48,12 @@ export default defineComponent({
 
 <template>
     <div class="px-4 mb-5">
-        <h1 class="font-bold text-6xl mb-3 text-primary">{{product.name}}</h1>
-        <router-link class="font-bold pi pi-backward" :to="{name: 'products'}">
-            <span class="pl-2">Back</span>
-        </router-link>
+        <div id="product-header" class="flex mt-2">
+            <router-link :to="{name: 'products'}">
+                <Button class="mr-2" icon="pi pi-backward" label="Back"></Button>
+            </router-link>
+            <h1 class="font-bold text-6xl mb-3 text-primary">{{product.name}}</h1>
+        </div>
         <div class="flex justify-between">
             <div class="col-6 pl-0">
                 <div>
