@@ -8,9 +8,11 @@ import Button from "primevue/button";
 import AutoComplete from "primevue/autocomplete";
 import Sidebar from "../../components/layouts/SideBar.vue";
 import DataTable from "primevue/datatable";
+import Tree from "primevue/tree";
+import CatalogList from "../../components/list/CatalogList.vue";
 
 export default defineComponent({
-    components: {TreeTable, Column, Card, Button, AutoComplete, Sidebar, DataTable},
+    components: {TreeTable, Column, Card, Button, AutoComplete, Sidebar, DataTable, Tree, CatalogList},
     name: "Create",
     data() {
         return {
@@ -38,9 +40,6 @@ export default defineComponent({
                 this.siteCategories = this.buildTree(response.data);
             });
         },
-        onRowReorder(event) {
-            this.siteCategories = event.value;
-        },
         buildTree(data) {
             const cats = [];
             if(!data) {
@@ -55,7 +54,8 @@ export default defineComponent({
                         created_at: item.created_at
                     },
                     label: item.child.name,
-                    children: this.buildTree(item.child.children)
+                    children: this.buildTree(item.child.children),
+                    moving: false
                 });
             });
             return cats;
@@ -77,6 +77,9 @@ export default defineComponent({
                     response.data.forEach(item => {
                         cats.push({
                             key: item.id,
+                            label: item.name,
+                            icon: 'pi pi-fw pi-inbox',
+                            show: false,
                             data: {
                                 id: item.id,
                                 name: item.name,
@@ -86,6 +89,10 @@ export default defineComponent({
                     });
                     this.categories = cats;
                 });
+        },
+        handleDragStart(event) {
+            console.log(event);
+            event.dataTransfer.setData('text/plain', event.target.dataset.key);
         },
     }
 })
@@ -109,6 +116,7 @@ export default defineComponent({
                 <Button label="Add" @click="addCategory"></Button>
             </div>
         </div>
+
         <Card class="bg-primary">
             <template #header>
                 <div class="flex justify-between">
@@ -117,32 +125,30 @@ export default defineComponent({
                 </div>
             </template>
             <template #content>
-                <TreeTable draggable="true"  :value="siteCategories" @rowReorder="onRowReorder">
-                    <Column field="id" header="Move" style="width: 2rem">
-                        <template #body="{data, node}" >
-                            <i class="pi pi-align-justify" />
-                        </template>
-                    </Column>
-                    <Column expander style="width: 5rem" />
-                    <Column field="name" header="Name" ></Column>
-                    <Column field="created_at" header="Created At" ></Column>
-                </TreeTable>
+                <div class="grid">
+                    <div class="col-3">
+                        <Card>
+                            <template #header>
+                                <h1 class="font-bold pl-4 pt-4">Categories</h1>
+                            </template>
+                            <template #content>
+                                <catalog-list :list="siteCategories"></catalog-list>
+                            </template>
+                        </Card>
+                    </div>
+                    <div class="col-9">
+                        <Card>
+                            <template #header>
+                                <h1 class="font-bold pl-4 pt-4">Page Details</h1>
+                            </template>
+                            <template #content>
+                                Details
+                            </template>
+                        </Card>
+                    </div>
+                </div>
             </template>
         </Card>
-<!--        <Card class="bg-primary">-->
-<!--            <template #header>-->
-<!--                <div class="flex justify-between">-->
-<!--                    <h1 class="font-bold pl-4 pt-3">Global Categories</h1>-->
-<!--                    <Button class="bg-green-800 hover:bg-green-600" label="Create Category" />-->
-<!--                </div>-->
-<!--            </template>-->
-<!--            <template #content>-->
-<!--                <TreeTable :value="categories">-->
-<!--                    <Column field="name" header="Name" expander></Column>-->
-<!--                    <Column field="created_at" header="Created At"></Column>-->
-<!--                </TreeTable>-->
-<!--            </template>-->
-<!--        </Card>-->
     </div>
 </template>
 
