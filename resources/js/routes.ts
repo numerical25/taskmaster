@@ -10,6 +10,7 @@ import Test from "./views/bubbles/Test.vue";
 import Success from "./views/cart/checkout/Success.vue";
 import Blog from "./views/blog/Blog.vue";
 import BlogView from "./views/blog/View.vue";
+import Dashboard from "./admin/pages/Dashboard/Dashboard.vue";
 
 const routes = [
     {
@@ -19,62 +20,72 @@ const routes = [
     },
     {
         path: '/products',
-        component: Products,
-        name: 'products',
-        children: []
-    },
-    {
-        path: '/products',
-        component: Products,
-        name: 'store',
         children: [
-        ]
-    },
-    {
-        path: '/products/:id/details',
-        component: ProductView,
-        name: 'product-details',
-        children: [
+            {
+                path: '',
+                component: Products,
+                name: 'products',
+                children: [
+                ]
+            },
+            {
+                path: ':id/details',
+                component: ProductView,
+                name: 'product-details',
+                children: [
+                ]
+            },
         ]
     },
     {
         path: '/cart',
-        component: Cart,
-        name: 'cart',
         children: [
-        ]
-    },
-    {
-        path: '/cart/checkout',
-        component: Checkout,
-        name: 'checkout',
-        children: [
-        ]
-    },
-    {
-        path: '/cart/success',
-        component: Success,
-        name: 'checkout-success',
-        children: [
+            {
+                path: '',
+                component: Cart,
+                name: 'cart',
+                children: [
+                ]
+            },
+            {
+                path: 'checkout',
+                component: Checkout,
+                name: 'checkout',
+                children: [
+                ]
+            },
+            {
+                path: 'success',
+                component: Success,
+                name: 'checkout-success',
+                children: [
+                ]
+            },
         ]
     },
     {
         path: '/task',
-        component: Tasks,
-        name: 'task',
         children: [
+            {
+                path: '',
+                component: Tasks,
+                name: 'task',
+                children: [
+                ]
+            },
+            {
+                path: ':id/edit/',
+                component: Edit,
+                name: 'task-edit'
+            },
+            {
+                path: 'create',
+                component: Create,
+                name: 'task-create'
+            },
         ]
     },
-    {
-        path: '/task/:id/edit/',
-        component: Edit,
-        name: 'task-edit'
-    },
-    {
-        path: '/task/create',
-        component: Create,
-        name: 'task-create'
-    },
+
     {
         path: '/bubbles',
         component: Test,
@@ -82,14 +93,22 @@ const routes = [
     },
     {
         path: '/blog',
-        component: Blog,
-        name: 'blog'
+        children: [
+            {
+                path: '/blog',
+                component: Blog,
+                name: 'blog',
+                children: [
+
+                ]
+            },
+            {
+                path: ':id/view',
+                component: BlogView,
+                name: 'blog-view'
+            }
+        ]
     },
-    {
-        path: '/blog/:id/view',
-        component: BlogView,
-        name: 'blog-view'
-    }
 ];
 
 export default new createRouter({

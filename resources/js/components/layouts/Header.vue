@@ -25,7 +25,7 @@ export default defineComponent({
         <Button icon="pi pi-list" label="Menu" @click="toggle" class="mr-3" />
         <router-link to="/">
             <h1 class="text-5xl font-bold text-primary" style="font-family: 'MyFont',serif;">
-                The Social Machine.<span>tech</span>
+                The_Social_Machine.<span>tech</span>
             </h1>
         </router-link>
     </div>
