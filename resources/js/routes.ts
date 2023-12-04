@@ -95,7 +95,7 @@ const routes = [
         path: '/blog',
         children: [
             {
-                path: '/blog',
+                path: '',
                 component: Blog,
                 name: 'blog',
                 children: [
