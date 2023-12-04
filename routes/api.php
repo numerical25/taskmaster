@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::middleware(['check.installer'])->group(function () {
 
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 Route::get('/tasks', [\App\Http\Controllers\TaskController::class, 'index']);
 Route::post('/tasks/create', [\App\Http\Controllers\TaskController::class, 'store']);
 Route::get('/tasks/{id}', [\App\Http\Controllers\TaskController::class, 'show']);

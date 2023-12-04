@@ -19,7 +19,7 @@ export default defineComponent({
 </script>
 
 <template>
-
+Latest Comments
 </template>
 
 <style scoped>
