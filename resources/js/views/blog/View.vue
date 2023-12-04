@@ -4,6 +4,7 @@ import ApiService from "../../services/ApiService";
 import {useRoute} from "vue-router";
 import Blog from "../../models/Blog";
 import Button from "primevue/button";
+import BlogComment from "../../components/comments/BlogComment.vue";
 
 export default defineComponent({
     name: "View",
@@ -20,7 +21,7 @@ export default defineComponent({
            this.blogData = response.data;
         });
     },
-    components: {Button}
+    components: {Button, BlogComment}
 })
 </script>
 
@@ -35,6 +36,7 @@ export default defineComponent({
         <span class="font-bold">Date:</span> {{ blogData.created_at}}
     </p>
     <p>{{blogData.content}}</p>
+    <blog-comment :content_id="route.params.id" />
 </div>
 </template>
 

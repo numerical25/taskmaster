@@ -31,6 +31,10 @@ Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index
 Route::get('/category/search', [\App\Http\Controllers\CategoryController::class, 'search']);
 Route::post('/category/create', [\App\Http\Controllers\CategoryController::class, 'create']);
 
+Route::get('/comment', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('/comment/latest', [\App\Http\Controllers\CommentController::class, 'latest']);
+Route::get('/comment/{id}/list', [\App\Http\Controllers\CommentController::class, 'list']);
+
 Route::get('/site-category', [\App\Http\Controllers\SiteCategoryController::class, 'index']);
 
 Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index']);
