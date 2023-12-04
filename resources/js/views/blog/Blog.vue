@@ -7,8 +7,6 @@ import Card from "primevue/card";
 import Button from "primevue/button";
 import Paginator from "primevue/paginator";
 import {toast} from "vue3-toastify";
-import Product from "../../models/Product";
-
 export default defineComponent({
     name: "Blog",
     data() {
