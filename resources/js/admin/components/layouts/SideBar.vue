@@ -50,10 +50,12 @@ export default defineComponent({
                             </div>
                             <ul class="list-none p-0 m-0 overflow-hidden">
                                 <li>
-                                    <a  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <router-link
+                                        :to="{name: 'dashboard'}"
+                                        class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                         <i class="pi pi-home mr-2"></i>
                                         <span class="font-medium">Dashboard</span>
-                                    </a>
+                                    </router-link>
                                 </li>
                                 <li>
                                     <router-link :to="{name: 'catalog'}"

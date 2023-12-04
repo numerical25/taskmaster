@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-
+Dashboard
 </template>
 
 <style scoped>

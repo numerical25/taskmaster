@@ -3,7 +3,6 @@ import '../bootstrap';
 import {createApp} from 'vue';
 import Admin from './Admin.vue';
 import routes from './routes.ts';
-import Vuex from 'vuex'
 import {Cart} from "../store/Cart.ts";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';

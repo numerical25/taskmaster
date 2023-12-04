@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <footer class="p-4 bg-primary ">
+    <footer class="p-4 bg-primary h-fit">
         <ul>
             <li class="underline"><router-link to="">About Us</router-link></li>
             <li class="underline">Contact Us</li>
